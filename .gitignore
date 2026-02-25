@@ -1,2 +1,6 @@
 blog-example.md
 .DS_Store
+
+# 블로그/썸네일 파일 — git 제외
+**/blog.md
+**/thumbnail.html
