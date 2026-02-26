@@ -20,6 +20,7 @@
 | 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | — |
 | 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | — |
 | 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | — |
+| 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | - |
 
 ---
 
@@ -29,7 +30,6 @@
 
 ### 웹 — React
 
-- [ ] `[React]` GitHub 프로필 검색기 만들기 (GitHub API)
 - [ ] `[React]` 영화 검색 앱 만들기 (TMDB API)
 - [ ] `[React]` 날씨 앱 만들기 (OpenWeatherMap API)
 - [ ] `[React]` 커스텀 훅으로 무한 스크롤 구현하기

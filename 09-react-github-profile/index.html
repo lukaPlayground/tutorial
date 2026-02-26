@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub 프로필 검색기</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --border: rgba(240,246,252,0.1);
+      --border2: rgba(240,246,252,0.15);
+      --text: #e6edf3;
+      --muted: rgba(230,237,243,0.5);
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-purple: #bc8cff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ─────────────────────────── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .topbar-logo svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text);
+    }
+
+    /* ── Search ─────────────────────────── */
+    .search-wrap {
+      flex: 1;
+      max-width: 440px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-input {
+      flex: 1;
+      height: 36px;
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      padding: 0 12px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .search-btn {
+      height: 36px;
+      padding: 0 16px;
+      background: linear-gradient(135deg, #238636, #2ea043);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .2s;
+    }
+    .search-btn:hover { opacity: .85; }
+    .search-btn:disabled { opacity: .45; cursor: default; }
+
+    /* ── Main layout ─────────────────────── */
+    .main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── States ─────────────────────────── */
+    .state-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .state-icon { font-size: 56px; }
+
+    .state-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .state-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 380px;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Profile layout ─────────────────── */
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 296px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .profile-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Left sidebar ────────────────────── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .avatar-wrap { position: relative; }
+
+    .avatar {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px solid var(--border2);
+      display: block;
+    }
+
+    .user-names {
+      padding-top: 4px;
+    }
+
+    .display-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .login {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .bio {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .follow-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .follow-row svg { width: 16px; height: 16px; fill: var(--muted); }
+
+    .follow-count { color: var(--text); font-weight: 600; }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      overflow: hidden;
+    }
+
+    .info-item svg { width: 16px; height: 16px; fill: var(--muted); flex-shrink: 0; }
+
+    .info-item a {
+      color: var(--accent);
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .info-item a:hover { text-decoration: underline; }
+
+    .profile-link {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .profile-link:hover { border-color: var(--border2); background: #2d333b; }
+
+    /* ── Stats bar ───────────────────────── */
+    .stats-bar {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 14px 12px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── Repo section ────────────────────── */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title span {
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1px 8px;
+      color: var(--muted);
+    }
+
+    .repos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .repos-grid { grid-template-columns: 1fr; }
+    }
+
+    .repo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-decoration: none;
+      transition: border-color .2s;
+    }
+    .repo-card:hover { border-color: var(--border2); }
+
+    .repo-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .repo-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .repo-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .repo-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .repo-meta-item svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--muted);
+    }
+
+    .lang-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .repo-fork-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--muted);
+    }
+
+    /* ── Rate limit notice ───────────────── */
+    .rate-notice {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 24px;
+      opacity: .7;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    /* ─── 언어별 컬러 ──────────────────────────────────── */
+    const LANG_COLORS = {
+      JavaScript: '#f1e05a',
+      TypeScript: '#3178c6',
+      Python: '#3572A5',
+      HTML: '#e34c26',
+      CSS: '#563d7c',
+      Java: '#b07219',
+      Kotlin: '#A97BFF',
+      Swift: '#F05138',
+      Go: '#00ADD8',
+      Rust: '#dea584',
+      PHP: '#4F5D95',
+      Ruby: '#701516',
+      'C++': '#f34b7d',
+      'C#': '#178600',
+      C: '#555555',
+      Shell: '#89e051',
+      Dart: '#00B4AB',
+      Vue: '#41b883',
+      Svelte: '#ff3e00',
+      default: '#8b949e',
+    };
+
+    function getLangColor(lang) {
+      return LANG_COLORS[lang] || LANG_COLORS.default;
+    }
+
+    function fmtNum(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+      return String(n);
+    }
+
+    /* ─── SVG Icons ──────────────────────────────────── */
+    const IconGitHub = () => (
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+    );
+
+    const IconPeople = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M5.5 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.507 5.507 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a.75.75 0 1 0 0 1.5 1.5 1.5 0 0 1 .666 2.844.75.75 0 0 0-.416.672v.352a.75.75 0 0 0 .574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 1 0 1.434-.44 5.01 5.01 0 0 0-2.56-3.012A3 3 0 0 0 11 4Z"/>
+      </svg>
+    );
+
+    const IconLocation = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="m12.596 11.596-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193 6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z"/>
+      </svg>
+    );
+
+    const IconCompany = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 .75.75v1.25h2.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v12.5ZM14.5 12.25v2a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1-.75-.75v-7.5c0-.28.116-.532.302-.714l2.5-2.5a.75.75 0 0 1 1.198.214V12.25Zm-1.5 0V5.061l-1 1v6.189h1Z"/>
+      </svg>
+    );
+
+    const IconLink = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 2 2 0 0 0 2.83 0l2.5-2.5a2 2 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a2 2 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 2 2 0 0 0-2.83 0l-2.5 2.5a2 2 0 0 0 0 2.83Z"/>
+      </svg>
+    );
+
+    const IconTwitter = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+      </svg>
+    );
+
+    const IconStar = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+      </svg>
+    );
+
+    const IconFork = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
+      </svg>
+    );
+
+    const IconRepo = () => (
+      <svg viewBox="0 0 16 16">
+        <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8Z"/>
+      </svg>
+    );
+
+    /* ─── Components ─────────────────────────────────── */
+
+    function SearchBar({ onSearch, loading }) {
+      const [q, setQ] = useState('');
+
+      function submit() {
+        const trimmed = q.trim();
+        if (trimmed) onSearch(trimmed);
+      }
+
+      return (
+        <div className="search-wrap">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="GitHub 사용자명 검색 (예: torvalds)"
+            value={q}
+            onChange={e => setQ(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && submit()}
+            disabled={loading}
+          />
+          <button className="search-btn" onClick={submit} disabled={loading || !q.trim()}>
+            {loading ? '검색 중…' : '검색'}
+          </button>
+        </div>
+      );
+    }
+
+    function UserSidebar({ user }) {
+      const {
+        avatar_url, name, login, bio,
+        location, company, blog, twitter_username, html_url,
+      } = user;
+
+      function normalizeUrl(url) {
+        if (!url) return null;
+        return url.startsWith('http') ? url : 'https://' + url;
+      }
+
+      const blogUrl = normalizeUrl(blog);
+
+      return (
+        <aside className="sidebar">
+          <div className="avatar-wrap">
+            <img className="avatar" src={avatar_url} alt={login} />
+          </div>
+
+          <div className="user-names">
+            {name && <div className="display-name">{name}</div>}
+            <div className="login">{login}</div>
+          </div>
+
+          {bio && <p className="bio">{bio}</p>}
+
+          <a className="profile-link" href={html_url} target="_blank" rel="noreferrer">
+            GitHub 프로필 보기 →
+          </a>
+
+          <div className="follow-row">
+            <IconPeople />
+            <span><span className="follow-count">{fmtNum(user.followers)}</span> followers</span>
+            <span style={{color:'var(--border2)'}}>·</span>
+            <span><span className="follow-count">{fmtNum(user.following)}</span> following</span>
+          </div>
+
+          <div className="info-list">
+            {company && (
+              <div className="info-item">
+                <IconCompany />
+                <span>{company.replace(/^@/, '')}</span>
+              </div>
+            )}
+            {location && (
+              <div className="info-item">
+                <IconLocation />
+                <span>{location}</span>
+              </div>
+            )}
+            {blogUrl && (
+              <div className="info-item">
+                <IconLink />
+                <a href={blogUrl} target="_blank" rel="noreferrer">
+                  {blog.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                </a>
+              </div>
+            )}
+            {twitter_username && (
+              <div className="info-item">
+                <IconTwitter />
+                <a href={`https://twitter.com/${twitter_username}`} target="_blank" rel="noreferrer">
+                  @{twitter_username}
+                </a>
+              </div>
+            )}
+          </div>
+        </aside>
+      );
+    }
+
+    function StatsBar({ user }) {
+      const stats = [
+        { label: '퍼블릭 레포', num: user.public_repos },
+        { label: '팔로워', num: user.followers },
+        { label: '팔로잉', num: user.following },
+        { label: '공개 Gist', num: user.public_gists },
+      ];
+      return (
+        <div className="stats-bar">
+          {stats.map(s => (
+            <div key={s.label} className="stat-item">
+              <div className="stat-num">{fmtNum(s.num)}</div>
+              <div className="stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function RepoCard({ repo }) {
+      return (
+        <a className="repo-card" href={repo.html_url} target="_blank" rel="noreferrer">
+          <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
+            <IconRepo style={{ width:14, height:14, fill:'var(--muted)' }} />
+            <div className="repo-name">{repo.name}</div>
+            {repo.fork && <span className="repo-fork-badge">fork</span>}
+          </div>
+
+          {repo.description && (
+            <p className="repo-desc">{repo.description}</p>
+          )}
+
+          <div className="repo-meta">
+            {repo.language && (
+              <div className="repo-meta-item">
+                <span className="lang-dot" style={{ background: getLangColor(repo.language) }} />
+                {repo.language}
+              </div>
+            )}
+            {repo.stargazers_count > 0 && (
+              <div className="repo-meta-item">
+                <IconStar />
+                {fmtNum(repo.stargazers_count)}
+              </div>
+            )}
+            {repo.forks_count > 0 && (
+              <div className="repo-meta-item">
+                <IconFork />
+                {fmtNum(repo.forks_count)}
+              </div>
+            )}
+          </div>
+        </a>
+      );
+    }
+
+    /* ─── Main App ────────────────────────────────────── */
+    function App() {
+      const [user, setUser]     = useState(null);
+      const [repos, setRepos]   = useState([]);
+      const [loading, setLoading] = useState(false);
+      const [error, setError]   = useState(null);
+      const [rateLimit, setRateLimit] = useState(null);
+
+      async function handleSearch(username) {
+        setLoading(true);
+        setError(null);
+        setUser(null);
+        setRepos([]);
+
+        try {
+          // 유저 정보
+          const userRes = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`);
+
+          // 남은 Rate Limit 저장
+          const remaining = userRes.headers.get('X-RateLimit-Remaining');
+          const limit      = userRes.headers.get('X-RateLimit-Limit');
+          if (remaining !== null) setRateLimit({ remaining, limit });
+
+          if (userRes.status === 404) {
+            throw new Error(`"${username}" 사용자를 찾을 수 없습니다.`);
+          }
+          if (userRes.status === 403) {
+            throw new Error('API 요청 한도에 도달했습니다. 잠시 후 다시 시도하세요.');
+          }
+          if (!userRes.ok) throw new Error('GitHub API 요청 실패: ' + userRes.status);
+
+          const userData = await userRes.json();
+          setUser(userData);
+
+          // 레포 목록 (스타 순 정렬, 최대 6개)
+          const reposRes = await fetch(
+            `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=stars&per_page=6&type=owner`
+          );
+          if (reposRes.ok) {
+            const reposData = await reposRes.json();
+            setRepos(reposData);
+          }
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      return (
+        <>
+          <header className="topbar">
+            <a className="topbar-logo" href="#" aria-label="홈">
+              <IconGitHub />
+              GitHub 검색기
+            </a>
+            <SearchBar onSearch={handleSearch} loading={loading} />
+          </header>
+
+          <main className="main">
+            {loading && (
+              <div className="state-center">
+                <div className="spinner" />
+                <p className="state-sub">프로필 불러오는 중…</p>
+              </div>
+            )}
+
+            {!loading && error && (
+              <div className="state-center">
+                <div className="state-icon">😕</div>
+                <div className="state-title">검색 실패</div>
+                <p className="state-sub">{error}</p>
+              </div>
+            )}
+
+            {!loading && !error && !user && (
+              <div className="state-center">
+                <div className="state-icon">🔍</div>
+                <div className="state-title">GitHub 프로필 검색</div>
+                <p className="state-sub">
+                  사용자명을 입력하고 Enter 또는 검색 버튼을 누르세요.<br />
+                  프로필 정보와 인기 레포지토리를 확인할 수 있습니다.
+                </p>
+              </div>
+            )}
+
+            {!loading && user && (
+              <div className="profile-layout">
+                <UserSidebar user={user} />
+                <div>
+                  <StatsBar user={user} />
+
+                  {repos.length > 0 && (
+                    <section>
+                      <div className="section-title">
+                        인기 레포지토리 <span>{repos.length}</span>
+                      </div>
+                      <div className="repos-grid">
+                        {repos.map(repo => (
+                          <RepoCard key={repo.id} repo={repo} />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+
+                  {repos.length === 0 && (
+                    <p style={{ color:'var(--muted)', fontSize:14 }}>
+                      퍼블릭 레포지토리가 없습니다.
+                    </p>
+                  )}
+
+                  {rateLimit && (
+                    <p className="rate-notice">
+                      GitHub API 요청 잔여: {rateLimit.remaining} / {rateLimit.limit}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+          </main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
