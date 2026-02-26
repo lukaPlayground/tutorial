@@ -73,17 +73,5 @@
 
 ---
 
-## 카테고리 구조 (Tistory)
-
-```
-튜토리얼
-├── 웹 (HTML/CSS/JS · React · Next.js)
-├── 앱 (Flutter)
-├── 백엔드 (Python · PHP)
-└── AI · 자동화
-```
-
----
-
 _Last updated: 2026-02-27_
 
