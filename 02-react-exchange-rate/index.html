@@ -242,7 +242,8 @@
       { code: 'MXN', flag: '🇲🇽', name: '멕시코 페소' },
     ];
 
-    const QUICK_CURRENCIES = ['KRW', 'JPY', 'EUR', 'GBP'];
+    const BASE_QUICK = ['KRW', 'USD', 'CNY', 'EUR'];
+    const FALLBACK_QUICK = 'JPY'; // fromCurrency가 BASE_QUICK 중 하나일 때 대체
 
     // 숫자 포맷
     function fmt(val, code) {
@@ -300,11 +301,24 @@
 
       const rate = rates ? rates[toCurrency] : null;
 
+      // fromCurrency 변경 — toCurrency랑 같아지면 자동 swap
+      function handleFromCurrencyChange(newFrom) {
+        if (newFrom === toCurrency) {
+          setToCurrency(fromCurrency);
+        }
+        setFromCurrency(newFrom);
+      }
+
       // 통화 스왑
       function handleSwap() {
         setFromCurrency(toCurrency);
         setToCurrency(fromCurrency);
       }
+
+      // 주요통화 목록 — fromCurrency 제외, 4개 유지
+      const quickList = BASE_QUICK.includes(fromCurrency)
+        ? BASE_QUICK.filter(c => c !== fromCurrency).concat([FALLBACK_QUICK])
+        : BASE_QUICK;
 
       // 입력 숫자만 허용
       function handleAmountChange(e) {
@@ -326,7 +340,7 @@
               <select
                 className="currency-select"
                 value={fromCurrency}
-                onChange={e => setFromCurrency(e.target.value)}
+                onChange={e => handleFromCurrencyChange(e.target.value)}
               >
                 {CURRENCIES.map(c => (
                   <option key={c.code} value={c.code}>{c.code}</option>
@@ -382,7 +396,7 @@
           <div style={{ marginTop: '20px' }}>
             <div className="quick-label">1 {fromCurrency} 기준 주요 통화</div>
             <div className="quick-grid">
-              {QUICK_CURRENCIES.map(code => {
+              {quickList.map(code => {
                 const c = CURRENCIES.find(x => x.code === code);
                 const r = rates?.[code];
                 return (
