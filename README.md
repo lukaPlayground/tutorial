@@ -4,17 +4,18 @@
 > 포맷: `[기술스택] 결과물 만들기`
 
 **저장소**: https://github.com/lukaPlayground/tutorial
+**데모 모음**: https://lukaplayground.github.io/tutorial
 
 ---
 
 ## 완료
 
-| # | 폴더 | 주제 | 블로그 |
-|---|------|------|--------|
-| 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | — |
-| 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | — |
-| 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | — |
-| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | — |
+| # | 폴더 | 주제 | 데모 | 블로그 |
+|---|------|------|------|--------|
+| 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | [GitHub Pages](https://lukaplayground.github.io/tutorial/01-drag-drop-todo/) | — |
+| 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | [GitHub Pages](https://lukaplayground.github.io/tutorial/02-react-exchange-rate/) | — |
+| 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-guestbook.vercel.app) | — |
+| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | [Streamlit](https://youtube-transcript-luka.streamlit.app) | — |
 
 ---
 

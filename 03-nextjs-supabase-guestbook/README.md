@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 방명록 — Next.js + Supabase
 
-## Getting Started
+Next.js App Router + Supabase로 만든 풀스택 방명록.
 
-First, run the development server:
+## 시작하기
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Supabase 설정
+
+[Supabase](https://supabase.com)에서 새 프로젝트 생성 후 SQL Editor에서 실행:
+
+```sql
+create table messages (
+  id         bigserial primary key,
+  name       text      not null,
+  content    text      not null,
+  created_at timestamptz default now()
+);
+
+alter table messages enable row level security;
+create policy "Read all"   on messages for select using (true);
+create policy "Insert all" on messages for insert with check (true);
+create policy "Delete all" on messages for delete using (true);
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 환경 변수 설정
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.local.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`.env.local`에 Supabase 키 입력:
 
-## Learn More
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. 로컬 실행
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[http://localhost:3000](http://localhost:3000) 확인.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Vercel 배포
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Vercel에 Import
+
+[vercel.com/new](https://vercel.com/new) → GitHub 연결 → `tutorial` 레포 선택 → **Root Directory**를 `03-nextjs-supabase-guestbook`으로 지정.
+
+### 2. 환경 변수 추가
+
+Vercel 프로젝트 Settings → Environment Variables:
+
+| Name | Value |
+|------|-------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
+
+### 3. Deploy
+
+환경 변수 저장 후 Redeploy → 완료.
+
+---
+
+## 기술 스택
+
+- **Next.js 15** (App Router)
+- **TypeScript**
+- **Supabase** (PostgreSQL)
+- **TailwindCSS**
+- **Server Action** (`'use server'`)

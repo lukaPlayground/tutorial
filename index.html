@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>튜토리얼 — Luka's Playground</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: rgba(255,255,255,0.07);
+      --text: #e2e8f0;
+      --muted: rgba(226,232,240,0.4);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 64px 20px;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header { margin-bottom: 56px; }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    header h1 span {
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    header p a {
+      color: rgba(226,232,240,0.6);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      transition: color .2s;
+    }
+    header p a:hover { color: var(--text); }
+
+    /* Section label */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-left: 2px;
+    }
+
+    /* Project grid */
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      transition: border-color .2s, transform .15s;
+    }
+    .project-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+    }
+
+    .card-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      width: 24px;
+    }
+
+    .card-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      width: 44px;
+      text-align: center;
+    }
+
+    .card-body { flex: 1; min-width: 0; }
+
+    .card-stack {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity .2s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: .8; }
+
+    .btn-demo {
+      background: linear-gradient(135deg, #6366f1, #818cf8);
+      color: white;
+    }
+
+    .btn-code {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-vercel {
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .btn-streamlit {
+      background: linear-gradient(135deg, #ff4b4b, #ff8b8b);
+      color: white;
+    }
+
+    .btn-coming {
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.2);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* Upcoming section */
+    .upcoming {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .upcoming-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 1px dashed rgba(255,255,255,0.06);
+      border-radius: 10px;
+      color: var(--muted);
+    }
+
+    .upcoming-stack {
+      font-size: 11px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+
+    .upcoming-title { font-size: 14px; }
+
+    /* Footer */
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Luka's Playground</p>
+      <h1>기술 스택별<br><span>튜토리얼</span> 모음</h1>
+      <p>
+        Claude Code로 만드는 미니 프로젝트 시리즈.
+        HTML/CSS/JS부터 React, Next.js, Python, Flutter까지.<br>
+        <a href="https://github.com/lukaPlayground/tutorial" target="_blank">GitHub</a> &nbsp;·&nbsp;
+        <a href="https://lukaplayground.tistory.com" target="_blank">블로그</a>
+      </p>
+    </header>
+
+    <!-- Completed -->
+    <p class="section-label">완료</p>
+    <div class="projects">
+
+      <div class="project-card" style="cursor:default">
+        <span class="card-num">01</span>
+        <span class="card-icon">🖱️</span>
+        <div class="card-body">
+          <div class="card-stack">HTML / CSS / JS</div>
+          <div class="card-title">드래그앤드롭 Todo 앱</div>
+          <div class="card-desc">HTML5 Drag and Drop API · LocalStorage · 라이브러리 없음</div>
+        </div>
+        <div class="card-actions">
+          <a href="./01-drag-drop-todo/" class="btn btn-demo">데모</a>
+          <a href="https://github.com/lukaPlayground/tutorial/tree/main/01-drag-drop-todo" target="_blank" class="btn btn-code">코드</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="cursor:default">
+        <span class="card-num">02</span>
+        <span class="card-icon">💱</span>
+        <div class="card-body">
+          <div class="card-stack">React</div>
+          <div class="card-title">실시간 환율 계산기</div>
+          <div class="card-desc">React 18 CDN · useEffect · useCallback · ExchangeRate-API</div>
+        </div>
+        <div class="card-actions">
+          <a href="./02-react-exchange-rate/" class="btn btn-demo">데모</a>
+          <a href="https://github.com/lukaPlayground/tutorial/tree/main/02-react-exchange-rate" target="_blank" class="btn btn-code">코드</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="cursor:default">
+        <span class="card-num">03</span>
+        <span class="card-icon">📝</span>
+        <div class="card-body">
+          <div class="card-stack">Next.js · Supabase</div>
+          <div class="card-title">방명록 (풀스택)</div>
+          <div class="card-desc">App Router · Server Action · ISR · TypeScript</div>
+        </div>
+        <div class="card-actions">
+          <a href="https://tutorial-guestbook.vercel.app" target="_blank" class="btn btn-vercel">▲ Vercel</a>
+          <a href="https://github.com/lukaPlayground/tutorial/tree/main/03-nextjs-supabase-guestbook" target="_blank" class="btn btn-code">코드</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="cursor:default">
+        <span class="card-num">04</span>
+        <span class="card-icon">🎬</span>
+        <div class="card-body">
+          <div class="card-stack">Python</div>
+          <div class="card-title">유튜브 자막 추출기</div>
+          <div class="card-desc">youtube-transcript-api · argparse · CLI + Streamlit 웹 UI</div>
+        </div>
+        <div class="card-actions">
+          <a href="https://youtube-transcript-luka.streamlit.app" target="_blank" class="btn btn-streamlit">Streamlit</a>
+          <a href="https://github.com/lukaPlayground/tutorial/tree/main/04-python-youtube-transcript" target="_blank" class="btn btn-code">코드</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Upcoming -->
+    <p class="section-label">진행 예정</p>
+    <div class="upcoming">
+      <div class="upcoming-item"><span class="upcoming-stack">HTML/CSS/JS</span><span class="upcoming-title">다크모드 토글 포트폴리오 페이지</span></div>
+      <div class="upcoming-item"><span class="upcoming-stack">React</span><span class="upcoming-title">GitHub 프로필 검색기</span></div>
+      <div class="upcoming-item"><span class="upcoming-stack">Flutter</span><span class="upcoming-title">가계부 앱 (로컬 저장)</span></div>
+      <div class="upcoming-item"><span class="upcoming-stack">Python</span><span class="upcoming-title">엑셀 자동화 스크립트</span></div>
+      <div class="upcoming-item"><span class="upcoming-stack">Next.js</span><span class="upcoming-title">마크다운 블로그 (정적 생성)</span></div>
+    </div>
+
+    <footer>
+      <span>Luka's Playground · 2026</span>
+      <a href="https://github.com/lukaPlayground/tutorial" target="_blank">GitHub →</a>
+    </footer>
+  </div>
+</body>
+</html>
