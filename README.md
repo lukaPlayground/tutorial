@@ -25,8 +25,6 @@
 
 ### 웹 — 바닐라 JS
 
-- [ ] `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기
-- [ ] `[HTML/CSS/JS]` 로컬스토리지 활용 메모장 앱 만들기
 - [ ] `[HTML/CSS/JS]` Canvas API로 그림판 만들기
 - [ ] `[HTML/CSS/JS]` 타이머 + 뽀모도로 앱 만들기
 
@@ -87,5 +85,5 @@
 
 ---
 
-_Last updated: 2026-02-26_
+_Last updated: 2026-02-27_
 
