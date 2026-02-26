@@ -20,7 +20,7 @@ function MessageItem({ msg }: { msg: Message }) {
 
   function handleDelete() {
     if (!confirm('삭제하시겠습니까?')) return
-    startTransition(() => deleteMessage(msg.id))
+    startTransition(() => { deleteMessage(msg.id) })
   }
 
   return (
