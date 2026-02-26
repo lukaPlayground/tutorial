@@ -14,6 +14,7 @@
 | 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | — |
 | 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | — |
 | 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | — |
+| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | — |
 
 ---
 
@@ -50,7 +51,6 @@
 
 ### 백엔드 / 자동화 — Python
 
-- [ ] `[Python]` 유튜브 자막 추출기 만들기
 - [ ] `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl)
 - [ ] `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup)
 - [ ] `[Python]` FastAPI로 REST API 서버 만들기
