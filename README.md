@@ -16,6 +16,7 @@
 | 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | [GitHub Pages](https://lukaplayground.github.io/tutorial/02-react-exchange-rate/) | — |
 | 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | — |
 | 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | [Streamlit](https://youtube-transcript-luka.streamlit.app) | — |
+| 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | — |
 
 ---
 
