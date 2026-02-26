@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>뽀모도로 타이머</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f1117;
+      --surface:  #1a1d27;
+      --surface2: #222636;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #e2e8f0;
+      --muted:    rgba(226,232,240,0.4);
+
+      /* 모드별 컬러 */
+      --focus-color:  #ef4444;
+      --short-color:  #22c55e;
+      --long-color:   #3b82f6;
+      --mode-color:   var(--focus-color);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      gap: 28px;
+    }
+
+    /* ── 모드 탭 ─────────────────────────────── */
+    .mode-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 5px;
+    }
+
+    .mode-tab {
+      padding: 7px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .mode-tab:hover { color: var(--text); }
+
+    .mode-tab.active-focus  { background: rgba(239,68,68,0.15);  color: #fca5a5; }
+    .mode-tab.active-short  { background: rgba(34,197,94,0.15);  color: #86efac; }
+    .mode-tab.active-long   { background: rgba(59,130,246,0.15); color: #93c5fd; }
+
+    /* ── 타이머 원형 ─────────────────────────── */
+    .timer-wrap {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    .timer-svg {
+      width: 280px;
+      height: 280px;
+      transform: rotate(-90deg);
+    }
+
+    .timer-track {
+      fill: none;
+      stroke: var(--surface2);
+      stroke-width: 10;
+    }
+
+    .timer-progress {
+      fill: none;
+      stroke: var(--mode-color);
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s linear, stroke 0.3s;
+    }
+
+    .timer-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .timer-display {
+      font-size: 60px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+
+    .timer-mode-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── 컨트롤 버튼 ─────────────────────────── */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-control {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-control:hover { background: var(--surface2); color: var(--text); }
+
+    .btn-play {
+      width: 68px;
+      height: 68px;
+      font-size: 26px;
+      background: var(--mode-color);
+      border-color: transparent;
+      color: white;
+      transition: background 0.3s, transform 0.15s;
+    }
+    .btn-play:hover { opacity: 0.88; transform: scale(1.05); color: white; background: var(--mode-color); }
+
+    /* ── 세션 카운터 ─────────────────────────── */
+    .session-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .session-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .session-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .session-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .session-dot.done { background: var(--focus-color); border-color: transparent; }
+    .session-dot.current {
+      background: transparent;
+      border-color: var(--focus-color);
+      box-shadow: 0 0 0 2px rgba(239,68,68,0.2);
+    }
+
+    /* ── 설정 패널 ───────────────────────────── */
+    .settings-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      width: 340px;
+    }
+
+    .settings-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .settings-row:last-child { margin-bottom: 0; }
+
+    .settings-row label {
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .settings-row label span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .settings-input {
+      width: 64px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .settings-input:focus { border-color: rgba(99,102,241,0.5); }
+
+    /* 사운드 토글 */
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle {
+      width: 40px;
+      height: 22px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .toggle.on { background: var(--focus-color); border-color: transparent; }
+
+    .toggle-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .toggle.on .toggle-thumb { left: 20px; }
+
+    .toggle-label { font-size: 13px; color: var(--text); }
+
+    /* ── 알림 토스트 ─────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      white-space: nowrap;
+      z-index: 100;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- 모드 탭 -->
+  <div class="mode-tabs">
+    <button class="mode-tab" data-mode="focus">집중</button>
+    <button class="mode-tab" data-mode="short">짧은 휴식</button>
+    <button class="mode-tab" data-mode="long">긴 휴식</button>
+  </div>
+
+  <!-- 원형 타이머 -->
+  <div class="timer-wrap">
+    <svg class="timer-svg" viewBox="0 0 280 280">
+      <circle class="timer-track"    cx="140" cy="140" r="126" />
+      <circle class="timer-progress" cx="140" cy="140" r="126" id="progressCircle" />
+    </svg>
+    <div class="timer-center">
+      <div class="timer-display" id="timerDisplay">25:00</div>
+      <div class="timer-mode-label" id="modeLabelEl">집중</div>
+    </div>
+  </div>
+
+  <!-- 컨트롤 -->
+  <div class="controls">
+    <button class="btn-control" id="resetBtn" title="초기화">↺</button>
+    <button class="btn-play btn-control" id="playBtn">▶</button>
+    <button class="btn-control" id="skipBtn" title="다음 세션">⏭</button>
+  </div>
+
+  <!-- 세션 카운터 -->
+  <div class="session-row">
+    <span class="session-label">세션</span>
+    <div class="session-dots" id="sessionDots"></div>
+    <span class="session-label" id="sessionCountLabel">0 / 4</span>
+  </div>
+
+  <!-- 설정 -->
+  <div class="settings-card">
+    <div class="settings-title">설정</div>
+
+    <div class="settings-row">
+      <label>집중 <span>(분)</span></label>
+      <input class="settings-input" type="number" id="focusMin"  min="1" max="60" value="25" />
+    </div>
+    <div class="settings-row">
+      <label>짧은 휴식 <span>(분)</span></label>
+      <input class="settings-input" type="number" id="shortMin"  min="1" max="30" value="5" />
+    </div>
+    <div class="settings-row">
+      <label>긴 휴식 <span>(분)</span></label>
+      <input class="settings-input" type="number" id="longMin"   min="1" max="60" value="15" />
+    </div>
+    <div class="settings-row">
+      <label>세션 반복 <span>(회)</span></label>
+      <input class="settings-input" type="number" id="sessionMax" min="1" max="8"  value="4" />
+    </div>
+    <div class="settings-row">
+      <div class="toggle-wrap">
+        <div class="toggle on" id="soundToggle"><div class="toggle-thumb"></div></div>
+        <span class="toggle-label">소리 알림</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (function () {
+    /* ── 설정 ──────────────────────────────── */
+    const MODES = { focus: '집중', short: '짧은 휴식', long: '긴 휴식' };
+    const COLORS = { focus: '#ef4444', short: '#22c55e', long: '#3b82f6' };
+
+    let mode         = 'focus';
+    let totalSec     = 25 * 60;
+    let remainSec    = totalSec;
+    let isRunning    = false;
+    let timerId      = null;
+    let sessions     = 0;     // 완료된 집중 세션 수
+    let soundEnabled = true;
+
+    /* ── 요소 ──────────────────────────────── */
+    const displayEl   = document.getElementById('timerDisplay');
+    const modeLabelEl = document.getElementById('modeLabelEl');
+    const playBtn     = document.getElementById('playBtn');
+    const resetBtn    = document.getElementById('resetBtn');
+    const skipBtn     = document.getElementById('skipBtn');
+    const progressEl  = document.getElementById('progressCircle');
+    const sessionDots = document.getElementById('sessionDots');
+    const sessionLbl  = document.getElementById('sessionCountLabel');
+    const toastEl     = document.getElementById('toast');
+    const soundToggle = document.getElementById('soundToggle');
+
+    const CIRCUMFERENCE = 2 * Math.PI * 126; // r=126
+    progressEl.style.strokeDasharray  = CIRCUMFERENCE;
+    progressEl.style.strokeDashoffset = 0;
+
+    /* ── 초기화 ─────────────────────────────── */
+    updateModeTab();
+    renderDots();
+    updateDisplay();
+    updateProgress();
+
+    /* ── 모드 탭 ─────────────────────────────── */
+    document.querySelectorAll('.mode-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (isRunning) return; // 실행 중엔 탭 전환 막기
+        switchMode(this.dataset.mode);
+      });
+    });
+
+    function switchMode(newMode) {
+      mode = newMode;
+      totalSec  = getMins(mode) * 60;
+      remainSec = totalSec;
+      updateModeTab();
+      updateDisplay();
+      updateProgress();
+      updateColor();
+    }
+
+    function updateModeTab() {
+      document.querySelectorAll('.mode-tab').forEach(function (btn) {
+        btn.className = 'mode-tab';
+        if (btn.dataset.mode === mode) btn.classList.add('active-' + mode);
+      });
+      modeLabelEl.textContent = MODES[mode];
+    }
+
+    function updateColor() {
+      const c = COLORS[mode];
+      document.documentElement.style.setProperty('--mode-color', c);
+      progressEl.style.stroke = c;
+      playBtn.style.background = c;
+    }
+
+    updateColor();
+
+    /* ── 분 읽기 ─────────────────────────────── */
+    function getMins(m) {
+      if (m === 'focus')  return +document.getElementById('focusMin').value  || 25;
+      if (m === 'short')  return +document.getElementById('shortMin').value  || 5;
+      if (m === 'long')   return +document.getElementById('longMin').value   || 15;
+    }
+
+    function getSessionMax() {
+      return +document.getElementById('sessionMax').value || 4;
+    }
+
+    /* ── 플레이/일시정지 ─────────────────────── */
+    playBtn.addEventListener('click', function () {
+      isRunning ? pause() : start();
+    });
+
+    function start() {
+      isRunning = true;
+      playBtn.textContent = '⏸';
+      timerId = setInterval(tick, 1000);
+    }
+
+    function pause() {
+      isRunning = false;
+      playBtn.textContent = '▶';
+      clearInterval(timerId);
+    }
+
+    function tick() {
+      if (remainSec <= 0) {
+        onComplete();
+        return;
+      }
+      remainSec--;
+      updateDisplay();
+      updateProgress();
+    }
+
+    /* ── 완료 처리 ───────────────────────────── */
+    function onComplete() {
+      pause();
+      beep();
+
+      if (mode === 'focus') {
+        sessions++;
+        renderDots();
+        const max = getSessionMax();
+        sessionLbl.textContent = sessions + ' / ' + max;
+
+        if (sessions >= max) {
+          showToast('🎉 ' + max + '세션 완료! 긴 휴식 시간');
+          sessions = 0;
+          renderDots();
+          sessionLbl.textContent = '0 / ' + max;
+          switchMode('long');
+        } else {
+          showToast('✅ 집중 완료! 짧은 휴식 시작');
+          switchMode('short');
+        }
+      } else {
+        showToast('⏰ 휴식 끝! 다시 집중할 시간');
+        switchMode('focus');
+      }
+    }
+
+    /* ── 리셋 ────────────────────────────────── */
+    resetBtn.addEventListener('click', function () {
+      pause();
+      remainSec = totalSec;
+      playBtn.textContent = '▶';
+      updateDisplay();
+      updateProgress();
+    });
+
+    /* ── 스킵 ────────────────────────────────── */
+    skipBtn.addEventListener('click', function () {
+      pause();
+      onComplete();
+    });
+
+    /* ── 디스플레이 ──────────────────────────── */
+    function updateDisplay() {
+      const m = String(Math.floor(remainSec / 60)).padStart(2, '0');
+      const s = String(remainSec % 60).padStart(2, '0');
+      displayEl.textContent = m + ':' + s;
+      document.title = m + ':' + s + ' — 뽀모도로';
+    }
+
+    /* ── 원형 진행바 ─────────────────────────── */
+    function updateProgress() {
+      const ratio  = remainSec / totalSec;
+      const offset = CIRCUMFERENCE * (1 - ratio);
+      progressEl.style.strokeDashoffset = offset;
+    }
+
+    /* ── 세션 점 렌더링 ──────────────────────── */
+    function renderDots() {
+      const max = getSessionMax();
+      sessionDots.innerHTML = '';
+      for (let i = 0; i < max; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'session-dot';
+        if (i < sessions)       dot.classList.add('done');
+        else if (i === sessions) dot.classList.add('current');
+        sessionDots.appendChild(dot);
+      }
+      sessionLbl.textContent = sessions + ' / ' + max;
+    }
+
+    /* ── 설정 변경 시 재적용 ─────────────────── */
+    ['focusMin','shortMin','longMin','sessionMax'].forEach(function (id) {
+      document.getElementById(id).addEventListener('change', function () {
+        if (!isRunning) {
+          totalSec  = getMins(mode) * 60;
+          remainSec = totalSec;
+          updateDisplay();
+          updateProgress();
+        }
+        renderDots();
+      });
+    });
+
+    /* ── 소리 토글 ───────────────────────────── */
+    soundToggle.addEventListener('click', function () {
+      soundEnabled = !soundEnabled;
+      this.classList.toggle('on', soundEnabled);
+    });
+
+    /* ── 소리 (Web Audio API) ────────────────── */
+    function beep() {
+      if (!soundEnabled) return;
+      try {
+        const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type      = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.8);
+      } catch (e) {}
+    }
+
+    /* ── 토스트 알림 ─────────────────────────── */
+    let toastTimer;
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toastEl.classList.remove('show');
+      }, 3000);
+    }
+
+    /* ── 키보드 단축키 ───────────────────────── */
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.code === 'Space') { e.preventDefault(); playBtn.click(); }
+      if (e.key === 'r' || e.key === 'R') resetBtn.click();
+    });
+
+  })();
+  </script>
+
+</body>
+</html>
