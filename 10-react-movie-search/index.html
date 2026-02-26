@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>영화 검색기</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #f0f0f0;
+      --muted: rgba(240,240,240,0.45);
+      --accent: #e50914;
+      --accent2: #f5a623;
+      --gold: #f5c518;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────── */
+    .header {
+      background: linear-gradient(180deg, #000 0%, transparent 100%);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(15,15,15,0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .search-wrap {
+      flex: 1;
+      max-width: 460px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-input {
+      flex: 1;
+      height: 38px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      padding: 0 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .search-btn {
+      height: 38px;
+      padding: 0 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+      white-space: nowrap;
+    }
+    .search-btn:hover { opacity: .85; }
+    .search-btn:disabled { opacity: .4; cursor: default; }
+
+    /* ── Main ────────────────────────────── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    /* ── API Key Setup ───────────────────── */
+    .setup-box {
+      max-width: 520px;
+      margin: 60px auto;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 36px 32px;
+    }
+
+    .setup-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .setup-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .setup-steps {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 2;
+      margin-bottom: 20px;
+      padding-left: 4px;
+    }
+
+    .setup-steps a { color: var(--accent2); }
+
+    .setup-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .setup-input {
+      flex: 1;
+      height: 40px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      padding: 0 14px;
+      outline: none;
+      font-family: monospace;
+      transition: border-color .2s;
+    }
+    .setup-input:focus { border-color: var(--accent); }
+
+    .setup-btn {
+      height: 40px;
+      padding: 0 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .setup-btn:hover { opacity: .85; }
+
+    .setup-error {
+      font-size: 13px;
+      color: #ff6b6b;
+      margin-top: 10px;
+    }
+
+    /* ── Section title ───────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .key-reset {
+      font-size: 12px;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: border-color .2s, color .2s;
+    }
+    .key-reset:hover { border-color: var(--border2); color: var(--text); }
+
+    /* ── Movie Grid ──────────────────────── */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .movie-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    }
+
+    .movie-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, border-color .2s;
+    }
+    .movie-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+
+    .poster-wrap {
+      aspect-ratio: 2/3;
+      background: var(--surface2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .no-poster {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      color: var(--muted);
+    }
+
+    .rating-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 6px;
+      padding: 3px 7px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      backdrop-filter: blur(4px);
+    }
+
+    .star { color: var(--gold); }
+
+    .card-body { padding: 10px 12px 12px; }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .card-year {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── States ─────────────────────────── */
+    .state-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .state-icon { font-size: 52px; }
+    .state-title { font-size: 20px; font-weight: 700; }
+    .state-sub { font-size: 14px; color: var(--muted); max-width: 340px; line-height: 1.6; }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Modal ───────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-backdrop {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .modal-backdrop-placeholder {
+      width: 100%;
+      height: 120px;
+      background: var(--surface2);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .modal-body { padding: 24px; }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      backdrop-filter: blur(4px);
+      transition: background .2s;
+    }
+    .modal-close:hover { background: rgba(0,0,0,0.9); }
+
+    .modal-top {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .modal-poster {
+      width: 120px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 2/3;
+      background: var(--surface2);
+    }
+
+    .modal-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .modal-poster .no-poster { font-size: 28px; }
+
+    .modal-info { flex: 1; min-width: 0; }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .modal-tagline {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .modal-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .meta-chip {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .meta-chip.rating {
+      background: rgba(245,197,24,0.12);
+      border-color: rgba(245,197,24,0.25);
+      color: var(--gold);
+    }
+
+    .genre-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .genre-tag {
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(229,9,20,0.12);
+      border: 1px solid rgba(229,9,20,0.25);
+      color: #ff6b6b;
+    }
+
+    .modal-overview {
+      font-size: 14px;
+      color: rgba(240,240,240,0.75);
+      line-height: 1.75;
+    }
+
+    .modal-overview-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    /* ── Pagination ──────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 32px;
+    }
+
+    .page-btn {
+      height: 36px;
+      padding: 0 14px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .page-btn:hover:not(:disabled) { background: var(--surface2); }
+    .page-btn:disabled { opacity: .35; cursor: default; }
+    .page-btn.active { background: var(--accent); border-color: var(--accent); }
+
+    .page-info {
+      font-size: 14px;
+      color: var(--muted);
+      min-width: 80px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
+    const IMG_BACK = 'https://image.tmdb.org/t/p/w780';
+    const API_BASE = 'https://api.themoviedb.org/3';
+    const LS_KEY   = 'tmdb_api_key';
+
+    /* ─── Helpers ────────────────────────────── */
+    function getYear(dateStr) {
+      return dateStr ? dateStr.slice(0, 4) : '—';
+    }
+
+    function fmtRating(n) {
+      return n ? n.toFixed(1) : '—';
+    }
+
+    function fmtRuntime(min) {
+      if (!min) return null;
+      const h = Math.floor(min / 60);
+      const m = min % 60;
+      return h ? `${h}h ${m}m` : `${m}m`;
+    }
+
+    /* ─── API ────────────────────────────────── */
+    async function fetchTMDB(path, apiKey) {
+      const sep = path.includes('?') ? '&' : '?';
+      const res = await fetch(
+        `${API_BASE}${path}${sep}api_key=${apiKey}&language=ko-KR`
+      );
+      if (res.status === 401) throw new Error('INVALID_KEY');
+      if (!res.ok) throw new Error('API_ERROR');
+      return res.json();
+    }
+
+    /* ─── Components ─────────────────────────── */
+
+    function SetupBox({ onSave }) {
+      const [key, setKey] = useState('');
+      const [error, setError] = useState('');
+      const [checking, setChecking] = useState(false);
+
+      async function handleSave() {
+        const trimmed = key.trim();
+        if (!trimmed) { setError('API 키를 입력하세요.'); return; }
+        setChecking(true);
+        setError('');
+        try {
+          await fetchTMDB('/configuration', trimmed);
+          localStorage.setItem(LS_KEY, trimmed);
+          onSave(trimmed);
+        } catch (e) {
+          setError(e.message === 'INVALID_KEY'
+            ? '유효하지 않은 API 키입니다. 다시 확인해주세요.'
+            : 'API 연결에 실패했습니다. 잠시 후 시도해주세요.');
+        } finally {
+          setChecking(false);
+        }
+      }
+
+      return (
+        <div className="setup-box">
+          <div className="setup-title">TMDB API 키 설정</div>
+          <p className="setup-desc">
+            영화 정보를 불러오려면 무료 TMDB API 키가 필요합니다.<br />
+            키는 브라우저 로컬에만 저장되며 외부로 전송되지 않습니다.
+          </p>
+          <div className="setup-steps">
+            1. <a href="https://www.themoviedb.org/signup" target="_blank" rel="noreferrer">themoviedb.org</a>에서 무료 회원가입<br />
+            2. 계정 설정 → API → API 키(v3 auth) 발급<br />
+            3. 아래에 붙여넣기
+          </div>
+          <div className="setup-row">
+            <input
+              className="setup-input"
+              type="text"
+              placeholder="API 키 입력 (예: a1b2c3d4e5f6...)"
+              value={key}
+              onChange={e => setKey(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSave()}
+            />
+            <button className="setup-btn" onClick={handleSave} disabled={checking}>
+              {checking ? '확인 중…' : '저장'}
+            </button>
+          </div>
+          {error && <div className="setup-error">{error}</div>}
+        </div>
+      );
+    }
+
+    function MovieCard({ movie, onClick }) {
+      const poster = movie.poster_path
+        ? `${IMG_BASE}${movie.poster_path}`
+        : null;
+      const rating = movie.vote_average;
+      const year   = getYear(movie.release_date);
+
+      return (
+        <div className="movie-card" onClick={() => onClick(movie)}>
+          <div className="poster-wrap">
+            {poster
+              ? <img className="poster" src={poster} alt={movie.title} loading="lazy" />
+              : <div className="no-poster">🎬</div>
+            }
+            {rating > 0 && (
+              <div className="rating-badge">
+                <span className="star">★</span>
+                {fmtRating(rating)}
+              </div>
+            )}
+          </div>
+          <div className="card-body">
+            <div className="card-title">{movie.title}</div>
+            <div className="card-year">{year}</div>
+          </div>
+        </div>
+      );
+    }
+
+    function MovieModal({ movie, apiKey, onClose }) {
+      const [detail, setDetail] = useState(null);
+
+      useEffect(() => {
+        fetchTMDB(`/movie/${movie.id}`, apiKey)
+          .then(setDetail)
+          .catch(() => {});
+      }, [movie.id, apiKey]);
+
+      // 오버레이 클릭 시 닫기
+      function handleOverlayClick(e) {
+        if (e.target === e.currentTarget) onClose();
+      }
+
+      // ESC 키
+      useEffect(() => {
+        function onKey(e) { if (e.key === 'Escape') onClose(); }
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+      }, [onClose]);
+
+      const d = detail || movie;
+      const backdrop = d.backdrop_path ? `${IMG_BACK}${d.backdrop_path}` : null;
+      const poster   = d.poster_path   ? `${IMG_BASE}${d.poster_path}`   : null;
+      const runtime  = detail ? fmtRuntime(detail.runtime) : null;
+      const genres   = detail?.genres ?? [];
+
+      return (
+        <div className="modal-overlay" onClick={handleOverlayClick}>
+          <div className="modal">
+            <button className="modal-close" onClick={onClose}>✕</button>
+            {backdrop
+              ? <img className="modal-backdrop" src={backdrop} alt="" />
+              : <div className="modal-backdrop-placeholder" />
+            }
+            <div className="modal-body">
+              <div className="modal-top">
+                <div className="modal-poster">
+                  {poster
+                    ? <img src={poster} alt={d.title} />
+                    : <div className="no-poster">🎬</div>
+                  }
+                </div>
+                <div className="modal-info">
+                  <div className="modal-title">{d.title}</div>
+                  {detail?.tagline && (
+                    <div className="modal-tagline">"{detail.tagline}"</div>
+                  )}
+                  <div className="modal-meta">
+                    {d.vote_average > 0 && (
+                      <span className="meta-chip rating">★ {fmtRating(d.vote_average)}</span>
+                    )}
+                    {d.release_date && (
+                      <span className="meta-chip">{getYear(d.release_date)}</span>
+                    )}
+                    {runtime && (
+                      <span className="meta-chip">{runtime}</span>
+                    )}
+                    {detail?.vote_count > 0 && (
+                      <span className="meta-chip">투표 {detail.vote_count.toLocaleString()}개</span>
+                    )}
+                  </div>
+                  {genres.length > 0 && (
+                    <div className="genre-list">
+                      {genres.map(g => (
+                        <span key={g.id} className="genre-tag">{g.name}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {d.overview && (
+                <div>
+                  <div className="modal-overview-title">줄거리</div>
+                  <p className="modal-overview">{d.overview}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ─── Main App ───────────────────────────── */
+    function App() {
+      const [apiKey,  setApiKey]  = useState(() => localStorage.getItem(LS_KEY) || '');
+      const [query,   setQuery]   = useState('');
+      const [movies,  setMovies]  = useState([]);
+      const [loading, setLoading] = useState(false);
+      const [error,   setError]   = useState(null);
+      const [page,    setPage]    = useState(1);
+      const [totalPages, setTotalPages] = useState(0);
+      const [mode,    setMode]    = useState('popular'); // 'popular' | 'search'
+      const [selected, setSelected] = useState(null);
+      const lastQuery = useRef('');
+
+      // API 키 저장 콜백
+      function handleSaveKey(key) { setApiKey(key); }
+
+      // 영화 fetch
+      const loadMovies = useCallback(async (q, p) => {
+        setLoading(true);
+        setError(null);
+        try {
+          const path = q
+            ? `/search/movie?query=${encodeURIComponent(q)}&page=${p}`
+            : `/movie/popular?page=${p}`;
+          const data = await fetchTMDB(path, apiKey);
+          setMovies(data.results || []);
+          setTotalPages(Math.min(data.total_pages || 0, 500));
+        } catch (e) {
+          if (e.message === 'INVALID_KEY') {
+            localStorage.removeItem(LS_KEY);
+            setApiKey('');
+          }
+          setError('영화 정보를 불러오지 못했습니다.');
+        } finally {
+          setLoading(false);
+        }
+      }, [apiKey]);
+
+      // 초기 로드 (popular)
+      useEffect(() => {
+        if (apiKey) loadMovies('', 1);
+      }, [apiKey]);
+
+      function handleSearch(q, p = 1) {
+        lastQuery.current = q;
+        setQuery(q);
+        setPage(p);
+        setMode(q ? 'search' : 'popular');
+        loadMovies(q, p);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function handlePage(newPage) {
+        setPage(newPage);
+        loadMovies(lastQuery.current, newPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function resetKey() {
+        localStorage.removeItem(LS_KEY);
+        setApiKey('');
+        setMovies([]);
+      }
+
+      // API 키 없으면 설정 화면
+      if (!apiKey) {
+        return (
+          <>
+            <header className="header">
+              <div className="logo">MOVIEDB</div>
+            </header>
+            <main className="main">
+              <SetupBox onSave={handleSaveKey} />
+            </main>
+          </>
+        );
+      }
+
+      const sectionLabel = mode === 'search'
+        ? `"${lastQuery.current}" 검색 결과`
+        : '지금 인기 영화';
+
+      return (
+        <>
+          <header className="header">
+            <div className="logo">MOVIEDB</div>
+            <SearchBar
+              onSearch={q => handleSearch(q, 1)}
+              loading={loading}
+            />
+          </header>
+
+          <main className="main">
+            <div className="section-header">
+              <div className="section-title">{sectionLabel}</div>
+              <button className="key-reset" onClick={resetKey}>API 키 초기화</button>
+            </div>
+
+            {loading && (
+              <div className="state-center">
+                <div className="spinner" />
+                <p className="state-sub">불러오는 중…</p>
+              </div>
+            )}
+
+            {!loading && error && (
+              <div className="state-center">
+                <div className="state-icon">😕</div>
+                <div className="state-title">오류 발생</div>
+                <p className="state-sub">{error}</p>
+              </div>
+            )}
+
+            {!loading && !error && movies.length === 0 && (
+              <div className="state-center">
+                <div className="state-icon">🎬</div>
+                <div className="state-title">검색 결과 없음</div>
+                <p className="state-sub">다른 검색어를 입력해보세요.</p>
+              </div>
+            )}
+
+            {!loading && !error && movies.length > 0 && (
+              <>
+                <div className="movie-grid">
+                  {movies.map(m => (
+                    <MovieCard key={m.id} movie={m} onClick={setSelected} />
+                  ))}
+                </div>
+
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <button
+                      className="page-btn"
+                      onClick={() => handlePage(page - 1)}
+                      disabled={page === 1}
+                    >
+                      ← 이전
+                    </button>
+                    <span className="page-info">{page} / {totalPages}</span>
+                    <button
+                      className="page-btn"
+                      onClick={() => handlePage(page + 1)}
+                      disabled={page >= totalPages}
+                    >
+                      다음 →
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+
+          {selected && (
+            <MovieModal
+              movie={selected}
+              apiKey={apiKey}
+              onClose={() => setSelected(null)}
+            />
+          )}
+        </>
+      );
+    }
+
+    /* ─── SearchBar ─────────────────────────── */
+    function SearchBar({ onSearch, loading }) {
+      const [q, setQ] = useState('');
+
+      function submit() {
+        onSearch(q.trim());
+      }
+
+      return (
+        <div className="search-wrap">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="영화 제목 검색…"
+            value={q}
+            onChange={e => setQ(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && submit()}
+            disabled={loading}
+          />
+          <button className="search-btn" onClick={submit} disabled={loading}>
+            검색
+          </button>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -12,7 +12,7 @@
 
 | # | 폴더 | 주제 | 데모 | 블로그 |
 |---|------|------|------|--------|
-| 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | [GitHub Pages](https://lukaplayground.github.io/tutorial/01-drag-drop-todo/) | https://lukaplayground.tistory.com/26 |
+| 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | [GitHub Pages](https://lukaplayground.github.io/tutorial/01-drag-drop-todo/) | [Blog](https://lukaplayground.tistory.com/26) |
 | 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | [GitHub Pages](https://lukaplayground.github.io/tutorial/02-react-exchange-rate/) | - |
 | 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | - |
 | 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | - |
@@ -21,16 +21,14 @@
 | 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | — |
 | 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | — |
 | 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | - |
+| 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | - |
 
 ---
 
 ## 진행 예정
 
-### 웹 — 바닐라 JS
-
 ### 웹 — React
 
-- [ ] `[React]` 영화 검색 앱 만들기 (TMDB API)
 - [ ] `[React]` 날씨 앱 만들기 (OpenWeatherMap API)
 - [ ] `[React]` 커스텀 훅으로 무한 스크롤 구현하기
 
@@ -66,7 +64,8 @@
 ### AI / 자동화
 
 - [ ] `[Claude API]` 나만의 AI 챗봇 웹앱 만들기
-- [ ] `[OpenAI API]` 이미지 설명 생성기 만들기
+- [ ] `[Pollinations.ai]` 이미지 생성기 만들기 (API 키 불필요, 무료)
+- [ ] `[Transformers.js]` 이미지 설명 생성기 만들기 (브라우저 내 AI 추론, API 키 불필요 / 첫 로드 ~200MB)
 - [ ] `[Python + Claude]` PDF 요약 자동화 스크립트 만들기
 - [ ] `[n8n / Make]` 블로그 포스팅 자동화 워크플로우 만들기
 
