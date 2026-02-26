@@ -477,11 +477,6 @@
       </svg>
     );
 
-    const IconRepo = () => (
-      <svg viewBox="0 0 16 16">
-        <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8Z"/>
-      </svg>
-    );
 
     /* ─── Components ─────────────────────────────────── */
 
@@ -604,10 +599,9 @@
     function RepoCard({ repo }) {
       return (
         <a className="repo-card" href={repo.html_url} target="_blank" rel="noreferrer">
-          <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
-            <IconRepo style={{ width:14, height:14, fill:'var(--muted)' }} />
+          <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
             <div className="repo-name">{repo.name}</div>
-            {repo.fork && <span className="repo-fork-badge">fork</span>}
+            {repo.fork && <span className="repo-fork-badge" style={{ alignSelf:'flex-start' }}>fork</span>}
           </div>
 
           {repo.description && (
