@@ -12,7 +12,7 @@
       --surface: #1a1d27;
       --border: rgba(255,255,255,0.07);
       --text: #e2e8f0;
-      --muted: rgba(226,232,240,0.4);
+      --muted: rgba(226,232,240,0.38);
     }
 
     body {
@@ -20,16 +20,13 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
-      padding: 64px 20px;
+      padding: 60px 20px 80px;
     }
 
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-    }
+    .wrap { max-width: 860px; margin: 0 auto; }
 
-    /* Header */
-    header { margin-bottom: 56px; }
+    /* ── Header ─────────────────────────────── */
+    header { margin-bottom: 52px; }
 
     .eyebrow {
       font-size: 12px;
@@ -45,7 +42,7 @@
       font-weight: 800;
       letter-spacing: -1px;
       line-height: 1.15;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     header h1 span {
@@ -55,53 +52,144 @@
       background-clip: text;
     }
 
-    header p {
-      font-size: 15px;
+    .header-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.7;
     }
 
+    .header-meta strong { color: var(--text); font-weight: 600; }
+    .header-meta .sep { opacity: .4; }
+
+    header p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
     header p a {
-      color: rgba(226,232,240,0.6);
+      color: rgba(226,232,240,0.55);
       text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.12);
       transition: color .2s;
     }
     header p a:hover { color: var(--text); }
 
-    /* Section label */
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin-bottom: 16px;
-      padding-left: 2px;
+    /* ── Category color tokens ───────────────── */
+    [data-cat="html"] {
+      --cat-color:  #fb923c;
+      --cat-bg:     rgba(251,146,60,0.10);
+      --cat-border: rgba(251,146,60,0.22);
+    }
+    [data-cat="react"] {
+      --cat-color:  #38bdf8;
+      --cat-bg:     rgba(56,189,248,0.10);
+      --cat-border: rgba(56,189,248,0.22);
+    }
+    [data-cat="nextjs"] {
+      --cat-color:  #cbd5e1;
+      --cat-bg:     rgba(203,213,225,0.08);
+      --cat-border: rgba(203,213,225,0.18);
+    }
+    [data-cat="python"] {
+      --cat-color:  #fbbf24;
+      --cat-bg:     rgba(251,191,36,0.10);
+      --cat-border: rgba(251,191,36,0.22);
     }
 
-    /* Project grid */
-    .projects {
+    /* ── Section ─────────────────────────────── */
+    .section { margin-bottom: 40px; }
+
+    /* extra space before non-web sections */
+    .section[data-cat="python"] { margin-top: 12px; }
+
+    .section-head {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 48px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .project-card {
+    .cat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cat-color);
+      flex-shrink: 0;
+    }
+
+    .cat-group {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
+    }
+
+    .cat-sep { color: var(--muted); opacity: .5; font-size: 12px; }
+
+    .cat-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cat-count {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 2px 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── Card grid ───────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ────────────────────────────────── */
+    .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 22px 24px;
+      padding: 18px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color .2s, transform .15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--cat-color);
+      opacity: 0.55;
+    }
+
+    .card:hover {
+      border-color: rgba(255,255,255,0.13);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
       display: flex;
       align-items: center;
-      gap: 20px;
-      text-decoration: none;
-      transition: border-color .2s, transform .15s;
-    }
-    .project-card:hover {
-      border-color: rgba(255,255,255,0.15);
-      transform: translateY(-1px);
+      gap: 8px;
     }
 
     .card-num {
@@ -110,48 +198,51 @@
       color: var(--muted);
       font-variant-numeric: tabular-nums;
       flex-shrink: 0;
-      width: 24px;
     }
 
-    .card-body { flex: 1; min-width: 0; }
-
-    .card-stack {
+    .card-tag {
       font-size: 11px;
       font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: .5px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      color: var(--cat-color);
+      background: var(--cat-bg);
+      border: 1px solid var(--cat-border);
+      white-space: nowrap;
     }
 
     .card-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
-      white-space: nowrap;
+      line-height: 1.45;
       overflow: hidden;
-      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
 
     .card-desc {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
-      margin-top: 3px;
+      line-height: 1.65;
+      flex: 1;
     }
 
-    .card-actions {
+    .card-footer {
       display: flex;
-      gap: 8px;
-      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 2px;
     }
 
+    /* ── Buttons ─────────────────────────────── */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       text-decoration: none;
       transition: opacity .2s;
@@ -159,68 +250,37 @@
     }
     .btn:hover { opacity: .8; }
 
-    .btn-demo {
-      background: linear-gradient(135deg, #6366f1, #818cf8);
-      color: white;
-    }
+    .btn-demo   { background: linear-gradient(135deg, #6366f1, #818cf8); color: #fff; }
+    .btn-code   { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--muted); }
+    .btn-vercel { background: #000; border: 1px solid rgba(255,255,255,0.15); color: #fff; }
+    .btn-local  { background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.10); color: rgba(255,255,255,0.22); pointer-events: none; }
 
-    .btn-code {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .btn-vercel {
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: white;
-    }
-
-    .btn-streamlit {
-      background: linear-gradient(135deg, #ff4b4b, #ff8b8b);
-      color: white;
-    }
-
-    .btn-coming {
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.2);
-      cursor: default;
-      pointer-events: none;
-    }
-
-    /* Upcoming section */
-    .upcoming {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .upcoming-item {
+    /* ── Divider between top-level categories ── */
+    .cat-divider {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 14px 18px;
-      border: 1px dashed rgba(255,255,255,0.06);
-      border-radius: 10px;
-      color: var(--muted);
+      margin: 12px 0 40px;
     }
 
-    .upcoming-stack {
+    .cat-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .cat-divider-label {
       font-size: 11px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 2px 8px;
-      color: rgba(255,255,255,0.35);
-      flex-shrink: 0;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      opacity: .7;
     }
 
-    .upcoming-title { font-size: 14px; }
-
-    /* Footer */
+    /* ── Footer ──────────────────────────────── */
     footer {
-      margin-top: 64px;
+      margin-top: 60px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
       display: flex;
@@ -230,192 +290,256 @@
       color: var(--muted);
     }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-    }
+    footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
     footer a:hover { color: var(--text); }
   </style>
 </head>
 <body>
   <div class="wrap">
+
+    <!-- ── Header ─────────────────────────────── -->
     <header>
       <p class="eyebrow">Luka's Playground</p>
       <h1>기술 스택별<br><span>튜토리얼</span> 모음</h1>
+      <div class="header-meta">
+        <span><strong>12</strong>개 완료</span>
+        <span class="sep">·</span>
+        <span>웹 &nbsp;·&nbsp; Python</span>
+      </div>
       <p>
-        만들면서 배우는 기술 스택별 미니 프로젝트 시리즈.
-        HTML/CSS/JS부터 React, Next.js, Python, Flutter까지.<br>
-        <a href="https://github.com/lukaPlayground/tutorial" target="_blank">GitHub</a> &nbsp;·&nbsp;
+        만들면서 배우는 기술 스택별 미니 프로젝트 시리즈.<br>
+        <a href="https://github.com/lukaPlayground/tutorial" target="_blank">GitHub</a>&nbsp;·&nbsp;
         <a href="https://lukaplayground.tistory.com" target="_blank">블로그</a>
       </p>
     </header>
 
-    <!-- Completed -->
-    <p class="section-label">완료</p>
-    <div class="projects">
+    <!-- ══ 웹 ══════════════════════════════════ -->
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">01</span>
-        <div class="card-body">
-          <div class="card-stack">HTML / CSS / JS</div>
-          <div class="card-title">드래그앤드롭 Todo 앱 (Drag & Drop Todo)</div>
+    <!-- 웹 · HTML / CSS / JS -->
+    <section class="section" data-cat="html">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">웹</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">HTML / CSS / JS</span>
+        <span class="cat-count">5개</span>
+      </div>
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">01</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+          <div class="card-title">드래그앤드롭 Todo 앱</div>
           <div class="card-desc">HTML5 Drag and Drop API · LocalStorage · 라이브러리 없음</div>
+          <div class="card-footer">
+            <a href="./01-drag-drop-todo/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/01-drag-drop-todo" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./01-drag-drop-todo/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/01-drag-drop-todo" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">02</span>
-        <div class="card-body">
-          <div class="card-stack">React</div>
-          <div class="card-title">실시간 환율 계산기 (Exchange Rate Calculator)</div>
-          <div class="card-desc">React 18 CDN · useEffect · useCallback · ExchangeRate-API</div>
-        </div>
-        <div class="card-actions">
-          <a href="./02-react-exchange-rate/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/02-react-exchange-rate" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
-
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">03</span>
-        <div class="card-body">
-          <div class="card-stack">Next.js · Supabase</div>
-          <div class="card-title">방명록 (Guestbook · Fullstack)</div>
-          <div class="card-desc">App Router · Server Action · ISR · TypeScript</div>
-        </div>
-        <div class="card-actions">
-          <a href="https://tutorial-puce-seven.vercel.app" target="_blank" class="btn btn-vercel">▲ Vercel</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/03-nextjs-supabase-guestbook" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
-
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">04</span>
-        <div class="card-body">
-          <div class="card-stack">Python</div>
-          <div class="card-title">유튜브 자막 추출기 (YouTube Transcript Extractor)</div>
-          <div class="card-desc">youtube-transcript-api · argparse · CLI + Streamlit 웹 UI</div>
-        </div>
-        <div class="card-actions">
-          <span class="btn btn-coming">로컬 실행</span>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/04-python-youtube-transcript" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
-
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">05</span>
-        <div class="card-body">
-          <div class="card-stack">HTML / CSS / JS</div>
-          <div class="card-title">다크모드 토글 포트폴리오 (Dark Mode Portfolio)</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">05</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+          <div class="card-title">다크모드 토글 포트폴리오</div>
           <div class="card-desc">CSS Custom Properties · localStorage · prefers-color-scheme</div>
+          <div class="card-footer">
+            <a href="./05-darkmode-portfolio/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/05-darkmode-portfolio" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./05-darkmode-portfolio/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/05-darkmode-portfolio" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">06</span>
-        <div class="card-body">
-          <div class="card-stack">HTML / CSS / JS</div>
-          <div class="card-title">로컬스토리지 메모장 (Notepad App)</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">06</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+          <div class="card-title">로컬스토리지 메모장</div>
           <div class="card-desc">localStorage CRUD · 디바운스 자동 저장 · 실시간 검색</div>
+          <div class="card-footer">
+            <a href="./06-localstorage-notepad/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/06-localstorage-notepad" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./06-localstorage-notepad/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/06-localstorage-notepad" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">07</span>
-        <div class="card-body">
-          <div class="card-stack">HTML / CSS / JS</div>
-          <div class="card-title">Canvas 그림판 (Drawing App)</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">07</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+          <div class="card-title">Canvas 그림판</div>
           <div class="card-desc">Canvas API · Flood Fill · Undo/Redo · PNG 저장</div>
+          <div class="card-footer">
+            <a href="./07-canvas-drawing/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/07-canvas-drawing" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./07-canvas-drawing/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/07-canvas-drawing" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">08</span>
-        <div class="card-body">
-          <div class="card-stack">HTML / CSS / JS</div>
-          <div class="card-title">뽀모도로 타이머 (Pomodoro Timer)</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">08</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+          <div class="card-title">뽀모도로 타이머</div>
           <div class="card-desc">SVG 원형 진행바 · Web Audio API · 세션 자동 전환</div>
+          <div class="card-footer">
+            <a href="./08-pomodoro-timer/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/08-pomodoro-timer" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./08-pomodoro-timer/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/08-pomodoro-timer" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">09</span>
-        <div class="card-body">
-          <div class="card-stack">React</div>
-          <div class="card-title">GitHub 프로필 검색기 (GitHub Profile Searcher)</div>
+      </div>
+    </section>
+
+    <!-- 웹 · React -->
+    <section class="section" data-cat="react">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">웹</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">React</span>
+        <span class="cat-count">5개</span>
+      </div>
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">02</span>
+            <span class="card-tag">React</span>
+          </div>
+          <div class="card-title">실시간 환율 계산기</div>
+          <div class="card-desc">React 18 CDN · useEffect · useCallback · ExchangeRate-API</div>
+          <div class="card-footer">
+            <a href="./02-react-exchange-rate/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/02-react-exchange-rate" target="_blank" class="btn btn-code">코드</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">09</span>
+            <span class="card-tag">React</span>
+          </div>
+          <div class="card-title">GitHub 프로필 검색기</div>
           <div class="card-desc">GitHub REST API · async/await · Rate Limit 처리</div>
+          <div class="card-footer">
+            <a href="./09-react-github-profile/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/09-react-github-profile" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./09-react-github-profile/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/09-react-github-profile" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">10</span>
-        <div class="card-body">
-          <div class="card-stack">React</div>
-          <div class="card-title">영화 검색 앱 (Movie Search · TMDB API)</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">10</span>
+            <span class="card-tag">React</span>
+          </div>
+          <div class="card-title">영화 검색 앱 (TMDB API)</div>
           <div class="card-desc">TMDB API · API 키 localStorage 관리 · 모달 · 페이지네이션</div>
+          <div class="card-footer">
+            <a href="./10-react-movie-search/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/10-react-movie-search" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./10-react-movie-search/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/10-react-movie-search" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card" style="cursor:default">
-        <span class="card-num">11</span>
-        <div class="card-body">
-          <div class="card-stack">React</div>
-          <div class="card-title">날씨 앱 (Weather App · Open-Meteo)</div>
-          <div class="card-desc">Open-Meteo API · 디바운스 검색 · Geolocation · °C/°F 전환</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">11</span>
+            <span class="card-tag">React</span>
+          </div>
+          <div class="card-title">날씨 앱 (Open-Meteo)</div>
+          <div class="card-desc">Open-Meteo API · 탭 UI · Geolocation · °C/°F 전환</div>
+          <div class="card-footer">
+            <a href="./11-react-weather/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/11-react-weather" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./11-react-weather/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/11-react-weather" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
-      <div class="project-card">
-        <span class="card-num">12</span>
-        <div class="card-body">
-          <div class="card-stack">React</div>
-          <div class="card-title">무한 스크롤 (커스텀 훅 + IntersectionObserver)</div>
-          <div class="card-desc">useInfiniteScroll 훅 · sentinel 패턴 · Skeleton UI · stale closure</div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">12</span>
+            <span class="card-tag">React</span>
+          </div>
+          <div class="card-title">무한 스크롤 (커스텀 훅)</div>
+          <div class="card-desc">useInfiniteScroll · IntersectionObserver · Skeleton UI</div>
+          <div class="card-footer">
+            <a href="./12-react-infinite-scroll/" class="btn btn-demo">데모</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/12-react-infinite-scroll" target="_blank" class="btn btn-code">코드</a>
+          </div>
         </div>
-        <div class="card-actions">
-          <a href="./12-react-infinite-scroll/" class="btn btn-demo">데모</a>
-          <a href="https://github.com/lukaPlayground/tutorial/tree/main/12-react-infinite-scroll" target="_blank" class="btn btn-code">코드</a>
-        </div>
-      </div>
 
+      </div>
+    </section>
+
+    <!-- 웹 · Next.js -->
+    <section class="section" data-cat="nextjs">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">웹</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">Next.js</span>
+        <span class="cat-count">1개</span>
+      </div>
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">03</span>
+            <span class="card-tag">Next.js</span>
+          </div>
+          <div class="card-title">방명록 (Fullstack)</div>
+          <div class="card-desc">Supabase · App Router · Server Action · ISR · TypeScript</div>
+          <div class="card-footer">
+            <a href="https://tutorial-puce-seven.vercel.app" target="_blank" class="btn btn-vercel">▲ Vercel</a>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/03-nextjs-supabase-guestbook" target="_blank" class="btn btn-code">코드</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 카테고리 구분선 ──────────────────────── -->
+    <div class="cat-divider">
+      <div class="cat-divider-line"></div>
+      <span class="cat-divider-label">백엔드</span>
+      <div class="cat-divider-line"></div>
     </div>
 
+    <!-- 백엔드 · Python -->
+    <section class="section" data-cat="python">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">백엔드</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">Python</span>
+        <span class="cat-count">1개</span>
+      </div>
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-num">04</span>
+            <span class="card-tag">Python</span>
+          </div>
+          <div class="card-title">유튜브 자막 추출기</div>
+          <div class="card-desc">youtube-transcript-api · argparse · CLI + Streamlit 웹 UI</div>
+          <div class="card-footer">
+            <span class="btn btn-local">로컬 실행</span>
+            <a href="https://github.com/lukaPlayground/tutorial/tree/main/04-python-youtube-transcript" target="_blank" class="btn btn-code">코드</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Footer ─────────────────────────────── -->
     <footer>
       <span>Luka's Playground · 2026</span>
       <a href="https://github.com/lukaPlayground/tutorial" target="_blank">GitHub →</a>
     </footer>
+
   </div>
 </body>
 </html>
