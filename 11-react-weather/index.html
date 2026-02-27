@@ -451,8 +451,9 @@
       const [error,    setError]    = useState(null);
       const [isFahr,   setIsFahr]   = useState(false);
       const [locating, setLocating] = useState(false);
-      const debounceRef = useRef(null);
-      const suggestRef  = useRef(null);
+      const debounceRef  = useRef(null);
+      const suggestRef   = useRef(null);
+      const composingRef = useRef(false); // IME 조합 중 여부
 
       // 외부 클릭 시 자동완성 닫기
       useEffect(() => {
@@ -478,10 +479,18 @@
         setQuery(val);
         clearTimeout(debounceRef.current);
         if (!val.trim()) { setSuggests([]); return; }
+        // 한글 IME 조합 중에는 API 호출 스킵
+        if (composingRef.current) return;
         debounceRef.current = setTimeout(async () => {
           const results = await geocode(val);
           setSuggests(results.slice(0, 5));
         }, 350);
+      }
+
+      // IME 조합 완료 시 (한글 음절 확정) → 즉시 검색 트리거
+      function handleCompositionEnd(e) {
+        composingRef.current = false;
+        handleInput(e.target.value);
       }
 
       // 도시 선택 → 날씨 로드
@@ -570,6 +579,8 @@
                 value={query}
                 onChange={e => handleInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleEnter()}
+                onCompositionStart={() => { composingRef.current = true; }}
+                onCompositionEnd={handleCompositionEnd}
               />
               {query && (
                 <button className="search-clear" onClick={() => { setQuery(''); setSuggests([]); }}>
