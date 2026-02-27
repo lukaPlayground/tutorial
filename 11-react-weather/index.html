@@ -142,6 +142,48 @@
     .city-btn:hover  { background: var(--surface); border-color: var(--border2); }
     .city-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(96,165,250,0.1); }
 
+    /* 직접 입력 버튼 */
+    .city-btn-manual { border-style: dashed; color: var(--muted); }
+    .city-btn-manual.active { border-style: solid; border-color: var(--accent); color: var(--accent); background: rgba(96,165,250,0.1); }
+
+    /* ── Coord input form ────────────────── */
+    .coord-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .coord-inputs { display: flex; gap: 12px; }
+
+    @media (max-width: 440px) {
+      .coord-inputs { flex-direction: column; }
+    }
+
+    .coord-field { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    .coord-label { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.3px; }
+
+    .coord-input {
+      height: 44px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      padding: 0 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .coord-input::placeholder { color: var(--muted); }
+    .coord-input:focus { border-color: var(--accent); }
+
+    .coord-err { font-size: 13px; color: #f87171; margin-top: -4px; }
+
     /* ── Global search ───────────────────── */
     .search-row {
       display: flex;
@@ -506,19 +548,101 @@
 
     /* ─── Korea tab ─────────────────────────── */
     function KoreaTab({ onSelect, activeCity, loading }) {
+      const [showCoord, setShowCoord] = useState(false);
+      const [lat,       setLat]       = useState('');
+      const [lon,       setLon]       = useState('');
+      const [coordErr,  setCoordErr]  = useState('');
+
+      function handleCityClick(city) {
+        setShowCoord(false);
+        setCoordErr('');
+        onSelect(city);
+      }
+
+      function toggleCoordForm() {
+        setShowCoord(v => !v);
+        setCoordErr('');
+      }
+
+      function handleCoordSearch() {
+        const latN = parseFloat(lat);
+        const lonN = parseFloat(lon);
+        if (isNaN(latN) || latN < -90  || latN > 90)  { setCoordErr('위도는 -90 ~ 90 사이의 숫자여야 합니다.');   return; }
+        if (isNaN(lonN) || lonN < -180 || lonN > 180) { setCoordErr('경도는 -180 ~ 180 사이의 숫자여야 합니다.'); return; }
+        setCoordErr('');
+        onSelect({
+          name:   `${latN.toFixed(4)}, ${lonN.toFixed(4)}`,
+          admin1: '직접 입력한 좌표',
+          country: '',
+          lat: latN,
+          lon: lonN,
+        });
+      }
+
       return (
-        <div className="city-grid">
-          {KOREA_CITIES.map(city => (
+        <>
+          <div className="city-grid">
+            {KOREA_CITIES.map(city => (
+              <button
+                key={city.name}
+                className={`city-btn${activeCity === city.name ? ' active' : ''}`}
+                onClick={() => handleCityClick(city)}
+                disabled={loading}
+              >
+                {city.name}
+              </button>
+            ))}
             <button
-              key={city.name}
-              className={`city-btn${activeCity === city.name ? ' active' : ''}`}
-              onClick={() => onSelect(city)}
+              className={`city-btn city-btn-manual${showCoord ? ' active' : ''}`}
+              onClick={toggleCoordForm}
               disabled={loading}
             >
-              {city.name}
+              직접 입력
             </button>
-          ))}
-        </div>
+          </div>
+
+          {showCoord && (
+            <div className="coord-form">
+              <div className="coord-inputs">
+                <div className="coord-field">
+                  <label className="coord-label">위도 (Latitude)</label>
+                  <input
+                    className="coord-input"
+                    type="number"
+                    step="0.0001"
+                    placeholder="예: 37.5665"
+                    value={lat}
+                    onChange={e => { setLat(e.target.value); setCoordErr(''); }}
+                    onKeyDown={e => e.key === 'Enter' && handleCoordSearch()}
+                    disabled={loading}
+                  />
+                </div>
+                <div className="coord-field">
+                  <label className="coord-label">경도 (Longitude)</label>
+                  <input
+                    className="coord-input"
+                    type="number"
+                    step="0.0001"
+                    placeholder="예: 126.9780"
+                    value={lon}
+                    onChange={e => { setLon(e.target.value); setCoordErr(''); }}
+                    onKeyDown={e => e.key === 'Enter' && handleCoordSearch()}
+                    disabled={loading}
+                  />
+                </div>
+              </div>
+              {coordErr && <p className="coord-err">{coordErr}</p>}
+              <button
+                className="search-btn"
+                style={{ alignSelf: 'flex-start', padding: '0 24px' }}
+                onClick={handleCoordSearch}
+                disabled={loading || !lat.trim() || !lon.trim()}
+              >
+                검색
+              </button>
+            </div>
+          )}
+        </>
       );
     }
 
@@ -637,11 +761,13 @@
         }
       }
 
-      // 국내 도시 선택
+      // 국내 도시 선택 (city.country가 있으면 그대로, 없으면 '대한민국' 기본값)
       function handleKoreaSelect(city) {
         setActiveCity(city.name);
         loadWeather(city.lat, city.lon, {
-          name: city.name, admin1: '', country: '대한민국',
+          name:    city.name,
+          admin1:  city.admin1  ?? '',
+          country: city.country ?? '대한민국',
         });
       }
 
