@@ -23,6 +23,7 @@
 | 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | - |
 | 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | - |
 | 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | - |
+| 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | - |
 
 ---
 
@@ -30,7 +31,6 @@
 
 ### 웹 — React
 
-- [ ] `[React]` 커스텀 훅으로 무한 스크롤 구현하기
 
 ### 웹 — Next.js
 
