@@ -46,7 +46,7 @@ export default function ChatPage() {
             <span className="font-semibold text-sm tracking-tight text-white">AI Chatbot</span>
             <span className="text-xs px-2 py-0.5 rounded-full"
               style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#a5b4fc' }}>
-              gpt-4o-mini
+              Pollinations.ai
             </span>
           </div>
           <a href="https://github.com/lukaPlayground/tutorial/tree/main/14-nextjs-ai-chatbot"
@@ -71,7 +71,7 @@ export default function ChatPage() {
               <div>
                 <p className="font-semibold text-white mb-1">무엇이든 물어보세요</p>
                 <p className="text-sm" style={{ color: 'var(--muted)' }}>
-                  Vercel AI SDK + OpenAI gpt-4o-mini로 구동
+                  Vercel AI SDK + Pollinations.ai로 구동 (API 키 불필요)
                 </p>
               </div>
               {/* 예시 질문 */}
@@ -140,7 +140,7 @@ export default function ChatPage() {
           {error && (
             <div className="text-xs text-center py-2 px-4 rounded-xl"
               style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5' }}>
-              오류가 발생했습니다. API 키를 확인해주세요.
+              오류가 발생했습니다. 잠시 후 다시 시도해주세요.
             </div>
           )}
 
