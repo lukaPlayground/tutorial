@@ -25,6 +25,7 @@
 | 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | - |
 | 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | - |
 | 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](https://tutorial-nextjs-markdown-blog.vercel.app) | - |
+| 14 | [14-nextjs-ai-chatbot](./14-nextjs-ai-chatbot) | `[Next.js]` Vercel AI SDK로 챗봇 만들기 | [Vercel](https://tutorial-nextjs-ai-chatbot.vercel.app) | - |
 
 ---
 
@@ -33,7 +34,7 @@
 ### 웹 — Next.js
 
 - [x] `[Next.js]` 마크다운 블로그 만들기 (정적 생성)
-- [ ] `[Next.js]` Vercel AI SDK로 챗봇 만들기
+- [x] `[Next.js]` Vercel AI SDK로 챗봇 만들기
 - [ ] `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기
 - [ ] `[Next.js]` NextAuth로 소셜 로그인 구현하기
 
@@ -69,5 +70,5 @@
 
 ---
 
-_Last updated: 2026-02-28_
+_Last updated: 2026-03-01_
 
