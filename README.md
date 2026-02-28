@@ -27,6 +27,7 @@
 | 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](https://tutorial-nextjs-markdown-blog.vercel.app) | - |
 | 14 | [14-nextjs-ai-chatbot](./14-nextjs-ai-chatbot) | `[Next.js]` Vercel AI SDK로 챗봇 만들기 | [Vercel](https://tutorial-i9xl.vercel.app) | - |
 | 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | - |
+| 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | - |
 
 ---
 
@@ -37,7 +38,7 @@
 - [x] `[Next.js]` 마크다운 블로그 만들기 (정적 생성)
 - [x] `[Next.js]` Vercel AI SDK로 챗봇 만들기
 - [x] `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기
-- [ ] `[Next.js]` NextAuth로 소셜 로그인 구현하기
+- [x] `[Next.js]` NextAuth로 소셜 로그인 구현하기
 
 ### 앱 — Flutter
 
@@ -71,5 +72,5 @@
 
 ---
 
-_Last updated: 2026-03-01_
+_Last updated: 2026-02-28_
 
