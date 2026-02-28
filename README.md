@@ -32,6 +32,35 @@
 
 ---
 
+## 로컬 실행 안내 (Python)
+
+Python 스크립트는 로컬에서 직접 실행한다. Python 3.8 이상 필요.
+
+> Python 설치: https://www.python.org/downloads/
+
+### 04-python-youtube-transcript
+
+```bash
+cd 04-python-youtube-transcript
+pip install -r requirements.txt
+
+# CLI 버전 (터미널 출력)
+python main.py <YouTube URL>
+
+# 웹 UI 버전 (Streamlit)
+streamlit run app.py
+# → 브라우저에서 http://localhost:8501 자동으로 열림
+```
+
+> **가상환경을 쓰고 싶다면 (선택)**
+> ```bash
+> python -m venv venv
+> source venv/bin/activate   # Windows: venv\Scripts\activate
+> pip install -r requirements.txt
+> ```
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 sqflite 등 네이티브 저장소를 사용해 웹 데모가 불가능하다.
