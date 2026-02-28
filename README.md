@@ -14,9 +14,9 @@
 |---|------|------|------|--------|
 | 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | [GitHub Pages](https://lukaplayground.github.io/tutorial/01-drag-drop-todo/) | [Blog](https://lukaplayground.tistory.com/26) |
 | 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | [GitHub Pages](https://lukaplayground.github.io/tutorial/02-react-exchange-rate/) | [Blog](https://lukaplayground.tistory.com/27) |
-| 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | - |
-| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | - |
-| 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | - |
+| 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | [Blog](https://lukaplayground.tistory.com/28) |
+| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | [Blog](https://lukaplayground.tistory.com/29) |
+| 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | [Blog](https://lukaplayground.tistory.com/30) |
 | 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | — |
 | 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | — |
 | 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | — |
@@ -24,17 +24,15 @@
 | 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | - |
 | 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | - |
 | 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | - |
+| 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](-) | - |
 
 ---
 
 ## 진행 예정
 
-### 웹 — React
-
-
 ### 웹 — Next.js
 
-- [ ] `[Next.js]` 마크다운 블로그 만들기 (정적 생성)
+- [x] `[Next.js]` 마크다운 블로그 만들기 (정적 생성)
 - [ ] `[Next.js]` Vercel AI SDK로 챗봇 만들기
 - [ ] `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기
 - [ ] `[Next.js]` NextAuth로 소셜 로그인 구현하기
@@ -71,5 +69,5 @@
 
 ---
 
-_Last updated: 2026-02-27_
+_Last updated: 2026-02-28_
 
