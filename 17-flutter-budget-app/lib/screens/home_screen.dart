@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (_) => AlertDialog(
         backgroundColor: const Color(0xFF1a1d2e),
         title: const Text('삭제', style: TextStyle(color: Colors.white, fontSize: 16)),
-        content: Text('${tx.category} ₩${_moneyFmt.format(tx.amount)}을 삭제할까요?',
+        content: Text('${tx.category} ${_moneyFmt.format(tx.amount)}원을 삭제할까요?',
             style: const TextStyle(color: Colors.white60, fontSize: 13)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('취소', style: TextStyle(color: Colors.white38))),
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${dayTotal >= 0 ? '+' : ''}${_moneyFmt.format(dayTotal)}',
+                                  '${dayTotal >= 0 ? '+' : '-'}${_moneyFmt.format(dayTotal.abs())}원',
                                   style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700,
                                     color: dayTotal >= 0 ? const Color(0xFF10b981) : const Color(0xFFf87171),
@@ -182,7 +182,7 @@ class _SummaryCard extends StatelessWidget {
           const Text('잔액', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.white38, letterSpacing: 0.5)),
           const SizedBox(height: 6),
           Text(
-            '₩${fmt.format(balance)}',
+            '${balance < 0 ? '-' : ''}${fmt.format(balance.abs())}원',
             style: TextStyle(
               fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: -1,
               color: balance >= 0 ? Colors.white : const Color(0xFFf87171),
@@ -223,7 +223,7 @@ class _SumItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 4),
-          Text('₩${fmt.format(amount)}',
+          Text('${fmt.format(amount)}원',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: color)),
         ],
       ),
@@ -274,7 +274,7 @@ class _TransactionTile extends StatelessWidget {
           ),
           // 금액
           Text(
-            '${isIncome ? '+' : '-'}₩${fmt.format(tx.amount)}',
+            '${isIncome ? '+' : '-'}${fmt.format(tx.amount)}원',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: color),
           ),
           const SizedBox(width: 8),
