@@ -18,17 +18,17 @@
 | 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | [Blog](https://lukaplayground.tistory.com/29) |
 | 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | [Blog](https://lukaplayground.tistory.com/30) |
 | 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | [Blog](https://lukaplayground.tistory.com/31) |
-| 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | — |
-| 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | — |
-| 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | - |
-| 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | - |
-| 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | - |
-| 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | - |
-| 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](https://tutorial-nextjs-markdown-blog.vercel.app) | - |
-| 14 | [14-nextjs-ai-chatbot](./14-nextjs-ai-chatbot) | `[Next.js]` Vercel AI SDK로 챗봇 만들기 | [Vercel](https://tutorial-i9xl.vercel.app) | - |
-| 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | - |
-| 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | - |
-| 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | - |
+| 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | [Blog](https://lukaplayground.tistory.com/32) |
+| 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | [Blog](https://lukaplayground.tistory.com/33) |
+| 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | [Blog](https://lukaplayground.tistory.com/34) |
+| 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | [Blog](https://lukaplayground.tistory.com/35) |
+| 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | [Blog](https://lukaplayground.tistory.com/36) |
+| 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | [Blog](https://lukaplayground.tistory.com/37) |
+| 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](https://tutorial-nextjs-markdown-blog.vercel.app) | [Blog](https://lukaplayground.tistory.com/38) |
+| 14 | [14-nextjs-ai-chatbot](./14-nextjs-ai-chatbot) | `[Next.js]` Vercel AI SDK로 챗봇 만들기 | [Vercel](https://tutorial-i9xl.vercel.app) | [Blog](https://lukaplayground.tistory.com/39) |
+| 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | [Blog](https://lukaplayground.tistory.com/40) |
+| 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | [Blog](https://lukaplayground.tistory.com/41) |
+| 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/42) |
 
 ---
 
