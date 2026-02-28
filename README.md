@@ -33,13 +33,6 @@
 
 ## 진행 예정
 
-### 웹 — Next.js
-
-- [x] `[Next.js]` 마크다운 블로그 만들기 (정적 생성)
-- [x] `[Next.js]` Vercel AI SDK로 챗봇 만들기
-- [x] `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기
-- [x] `[Next.js]` NextAuth로 소셜 로그인 구현하기
-
 ### 앱 — Flutter
 
 - [ ] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
