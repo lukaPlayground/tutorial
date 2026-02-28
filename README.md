@@ -17,7 +17,7 @@
 | 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | [Blog](https://lukaplayground.tistory.com/28) |
 | 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | [Blog](https://lukaplayground.tistory.com/29) |
 | 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | [Blog](https://lukaplayground.tistory.com/30) |
-| 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | — |
+| 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | [Blog](https://lukaplayground.tistory.com/31) |
 | 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | — |
 | 08 | [08-pomodoro-timer](./08-pomodoro-timer) | `[HTML/CSS/JS]` 뽀모도로 타이머 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/08-pomodoro-timer/) | — |
 | 09 | [09-react-github-profile](./09-react-github-profile) | `[React]` GitHub 프로필 검색기 만들기 (GitHub API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/09-react-github-profile/) | - |
