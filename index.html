@@ -26,7 +26,8 @@
     [data-cat="html"]   { --cat-color: #fb923c; --cat-bg: rgba(251,146,60,0.10);  --cat-border: rgba(251,146,60,0.22); }
     [data-cat="react"]  { --cat-color: #38bdf8; --cat-bg: rgba(56,189,248,0.10);  --cat-border: rgba(56,189,248,0.22); }
     [data-cat="nextjs"] { --cat-color: #cbd5e1; --cat-bg: rgba(203,213,225,0.08); --cat-border: rgba(203,213,225,0.18); }
-    [data-cat="python"] { --cat-color: #fbbf24; --cat-bg: rgba(251,191,36,0.10);  --cat-border: rgba(251,191,36,0.22); }
+    [data-cat="python"]  { --cat-color: #fbbf24; --cat-bg: rgba(251,191,36,0.10);  --cat-border: rgba(251,191,36,0.22); }
+    [data-cat="flutter"] { --cat-color: #34d399; --cat-bg: rgba(52,211,153,0.10);  --cat-border: rgba(52,211,153,0.22); }
 
     /* ── Header ─────────────────────────────── */
     .header-wrap { max-width: 860px; margin: 0 auto; padding: 60px 20px 32px; }
@@ -215,9 +216,9 @@
       <p class="eyebrow">Luka's Playground</p>
       <h1>기술 스택별<br><span>튜토리얼</span> 모음</h1>
       <div class="header-meta">
-        <span><strong>16</strong>개 완료</span>
+        <span><strong>17</strong>개 완료</span>
         <span class="sep">·</span>
-        <span>웹 &nbsp;·&nbsp; Python</span>
+        <span>웹 &nbsp;·&nbsp; 앱 &nbsp;·&nbsp; Python</span>
       </div>
       <p>
         만들면서 배우는 기술 스택별 미니 프로젝트 시리즈.<br>
@@ -238,6 +239,10 @@
       </a>
       <a href="#sec-nextjs" class="nav-pill" data-cat="nextjs">
         <span class="nav-dot"></span>Next.js<span class="nav-count">5</span>
+      </a>
+      <div class="nav-sep-v"></div>
+      <a href="#sec-flutter" class="nav-pill" data-cat="flutter">
+        <span class="nav-dot"></span>Flutter<span class="nav-count">1</span>
       </a>
       <div class="nav-sep-v"></div>
       <a href="#sec-python" class="nav-pill" data-cat="python">
@@ -446,6 +451,34 @@
             <div class="card-footer">
               <a href="https://tutorial-nextjs-nextauth.vercel.app" target="_blank" class="btn btn-vercel">▲ Vercel</a>
               <a href="https://github.com/lukaPlayground/tutorial/tree/main/16-nextjs-nextauth" target="_blank" class="btn btn-code">코드</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 앱 · Flutter ──────────────────────────── -->
+    <section class="section" id="sec-flutter" data-cat="flutter">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">앱</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">Flutter</span>
+        <span class="cat-spacer"></span>
+        <span class="cat-count">1개</span>
+        <span class="toggle-icon">▾</span>
+      </div>
+      <div class="grid-wrap">
+        <div class="card-grid">
+
+          <div class="card">
+            <div class="card-header"><span class="card-num">17</span><span class="card-tag">Flutter</span></div>
+            <div class="card-title">가계부 앱 (로컬 저장)</div>
+            <div class="card-desc">sqflite · SQLite · 수입/지출 CRUD · 날짜별 그룹핑 · intl</div>
+            <div class="card-footer">
+              <span class="btn btn-local">📱 로컬 실행</span>
+              <a href="https://github.com/lukaPlayground/tutorial/tree/main/17-flutter-budget-app" target="_blank" class="btn btn-code">코드</a>
             </div>
           </div>
 

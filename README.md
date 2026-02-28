@@ -28,6 +28,28 @@
 | 14 | [14-nextjs-ai-chatbot](./14-nextjs-ai-chatbot) | `[Next.js]` Vercel AI SDK로 챗봇 만들기 | [Vercel](https://tutorial-i9xl.vercel.app) | - |
 | 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | - |
 | 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | - |
+| 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | - |
+
+---
+
+## 로컬 실행 안내 (Flutter)
+
+Flutter 앱은 sqflite 등 네이티브 저장소를 사용해 웹 데모가 불가능하다.
+아래 방법으로 로컬에서 실행한다.
+
+### Mac (iOS Simulator)
+```bash
+open -a Simulator          # 시뮬레이터 실행
+cd 17-flutter-budget-app
+flutter run                # 자동으로 시뮬레이터 감지
+```
+
+### Windows (Android Emulator)
+```bash
+# Android Studio → Device Manager → 에뮬레이터 시작
+cd 17-flutter-budget-app
+flutter run                # 자동으로 에뮬레이터 감지
+```
 
 ---
 
@@ -35,7 +57,7 @@
 
 ### 앱 — Flutter
 
-- [ ] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
+- [x] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
 - [ ] `[Flutter]` 날씨 앱 만들기 (API 연동)
 - [ ] `[Flutter]` QR코드 생성/스캔 앱 만들기
 - [ ] `[Flutter]` 타이머 + 알림 앱 만들기
