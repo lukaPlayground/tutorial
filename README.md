@@ -24,7 +24,7 @@
 | 10 | [10-react-movie-search](./10-react-movie-search) | `[React]` 영화 검색 앱 만들기 (TMDB API) | [GitHub Pages](https://lukaplayground.github.io/tutorial/10-react-movie-search/) | - |
 | 11 | [11-react-weather](./11-react-weather) | `[React]` 날씨 앱 만들기 (Open-Meteo · API 키 불필요) | [GitHub Pages](https://lukaplayground.github.io/tutorial/11-react-weather/) | - |
 | 12 | [12-react-infinite-scroll](./12-react-infinite-scroll) | `[React]` 무한 스크롤 구현하기 (커스텀 훅 + IntersectionObserver) | [GitHub Pages](https://lukaplayground.github.io/tutorial/12-react-infinite-scroll/) | - |
-| 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](-) | - |
+| 13 | [13-nextjs-markdown-blog](./13-nextjs-markdown-blog) | `[Next.js]` 마크다운 블로그 만들기 (정적 생성) | [Vercel](https://tutorial-nextjs-markdown-blog.vercel.app) | - |
 
 ---
 
