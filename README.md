@@ -15,7 +15,7 @@
 | 01 | [01-drag-drop-todo](./01-drag-drop-todo) | `[HTML/CSS/JS]` 드래그앤드롭 Todo 앱 | [GitHub Pages](https://lukaplayground.github.io/tutorial/01-drag-drop-todo/) | [Blog](https://lukaplayground.tistory.com/26) |
 | 02 | [02-react-exchange-rate](./02-react-exchange-rate) | `[React]` 실시간 환율 계산기 (API 연동) | [GitHub Pages](https://lukaplayground.github.io/tutorial/02-react-exchange-rate/) | [Blog](https://lukaplayground.tistory.com/27) |
 | 03 | [03-nextjs-supabase-guestbook](./03-nextjs-supabase-guestbook) | `[Next.js]` Supabase로 방명록 만들기 (풀스택) | [Vercel](https://tutorial-puce-seven.vercel.app) | [Blog](https://lukaplayground.tistory.com/28) |
-| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 | [Blog](https://lukaplayground.tistory.com/29) |
+| 04 | [04-python-youtube-transcript](./04-python-youtube-transcript) | `[Python]` 유튜브 자막 추출기 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/29) |
 | 05 | [05-darkmode-portfolio](./05-darkmode-portfolio) | `[HTML/CSS/JS]` 다크모드 토글 포트폴리오 페이지 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/05-darkmode-portfolio/) | [Blog](https://lukaplayground.tistory.com/30) |
 | 06 | [06-localstorage-notepad](./06-localstorage-notepad) | `[HTML/CSS/JS]` 로컬스토리지 메모장 앱 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/06-localstorage-notepad/) | [Blog](https://lukaplayground.tistory.com/31) |
 | 07 | [07-canvas-drawing](./07-canvas-drawing) | `[HTML/CSS/JS]` Canvas API로 그림판 만들기 | [GitHub Pages](https://lukaplayground.github.io/tutorial/07-canvas-drawing/) | [Blog](https://lukaplayground.tistory.com/32) |
@@ -29,7 +29,7 @@
 | 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | [Blog](https://lukaplayground.tistory.com/40) |
 | 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | [Blog](https://lukaplayground.tistory.com/41) |
 | 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/42) |
-| 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
+| 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 실기기 필요 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
 | 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | — |
 
 ---
@@ -65,21 +65,35 @@ streamlit run app.py
 
 ## 로컬 실행 안내 (Flutter)
 
-Flutter 앱은 sqflite 등 네이티브 저장소를 사용해 웹 데모가 불가능하다.
+Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
 아래 방법으로 로컬에서 실행한다.
 
-### Mac (iOS Simulator)
+### 시뮬레이터 / 에뮬레이터 (17, 19번)
+
+#### Mac (iOS Simulator)
 ```bash
 open -a Simulator          # 시뮬레이터 실행
-cd 17-flutter-budget-app
+cd 17-flutter-budget-app   # 또는 19-flutter-timer
 flutter run                # 자동으로 시뮬레이터 감지
 ```
 
-### Windows (Android Emulator)
+#### Windows (Android Emulator)
 ```bash
 # Android Studio → Device Manager → 에뮬레이터 시작
-cd 17-flutter-budget-app
+cd 17-flutter-budget-app   # 또는 19-flutter-timer
 flutter run                # 자동으로 에뮬레이터 감지
+```
+
+### 실기기 필요 (18번 — QR 스캐너)
+
+18-flutter-qr-scanner는 카메라 + ML Kit를 사용하며, iOS 시뮬레이터에서 ML Kit arm64 슬라이스 미지원으로 빌드 불가.
+**실제 iOS/Android 기기** 연결 후 실행해야 한다.
+
+```bash
+# 기기 연결 후
+cd 18-flutter-qr-scanner
+flutter devices            # 연결된 기기 확인
+flutter run                # 실기기에서 실행
 ```
 
 ---
@@ -91,7 +105,6 @@ flutter run                # 자동으로 에뮬레이터 감지
 - [x] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
 - [x] `[Flutter]` QR 코드 생성/스캔 앱 만들기
 - [x] `[Flutter]` 타이머 + 알림 앱 만들기
-- [ ] `[Flutter]` 날씨 앱 만들기 (API 연동)
 - [ ] `[Flutter]` 간단한 메모 앱 만들기 (SQLite)
 
 ### 백엔드 / 자동화 — Python
