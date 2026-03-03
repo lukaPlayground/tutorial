@@ -35,7 +35,8 @@
 | 21 | [21-python-excel](./21-python-excel) | `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/46) |
 | 22 | [22-python-scraper](./22-python-scraper) | `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/47) |
 | 23 | [23-python-fastapi](./23-python-fastapi) | `[Python]` FastAPI로 REST API 서버 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/48) |
-| 24 | [24-python-telegram-bot](./24-python-telegram-bot) | `[Python]` Telegram 봇 만들기 | 로컬 실행 ↓ | [Blog](#) |
+| 24 | [24-python-telegram-bot](./24-python-telegram-bot) | `[Python]` Telegram 봇 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/49) |
+| 25 | [25-php-login](./25-php-login) | `[PHP]` 로그인/회원가입 시스템 만들기 | 로컬 실행 ↓ | [Blog](#) |
 
 ---
 
@@ -116,6 +117,24 @@ python3 main.py
 
 ---
 
+## 로컬 실행 안내 (PHP)
+
+PHP 내장 웹 서버로 로컬에서 실행한다. PHP 8.0 이상 필요.
+
+> PHP 설치: https://www.php.net/downloads
+
+### 25-php-login
+
+```bash
+cd 25-php-login
+php -S localhost:8080
+# → http://localhost:8080
+```
+
+> **데이터 저장**: SQLite 파일(`data/users.db`)이 자동 생성된다. 서버 없이 로컬 파일만으로 동작한다.
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -153,13 +172,9 @@ flutter run                # 실기기에서 실행
 
 ## 진행 예정
 
-### 백엔드 / 자동화 — Python
-
-- [x] `[Python]` Telegram 봇 만들기
-
 ### 백엔드 — PHP
 
-- [ ] `[PHP]` 로그인/회원가입 시스템 만들기
+- [x] `[PHP]` 로그인/회원가입 시스템 만들기
 - [ ] `[PHP]` 게시판 CRUD 만들기 (MySQL 연동)
 - [ ] `[PHP]` REST API 서버 만들기
 - [ ] `[PHP]` 파일 업로드 시스템 만들기
