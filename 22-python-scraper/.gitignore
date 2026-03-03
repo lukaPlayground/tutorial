@@ -1,0 +1,5 @@
+output/
+blog.md
+thumbnail.html
+__pycache__/
+*.pyc
