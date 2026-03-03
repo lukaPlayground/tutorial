@@ -34,7 +34,8 @@
 | 20 | [20-flutter-memo](./20-flutter-memo) | `[Flutter]` 메모앱 만들기 (Hive NoSQL) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/45) |
 | 21 | [21-python-excel](./21-python-excel) | `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/46) |
 | 22 | [22-python-scraper](./22-python-scraper) | `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/47) |
-| 23 | [23-python-fastapi](./23-python-fastapi) | `[Python]` FastAPI로 REST API 서버 만들기 | 로컬 실행 ↓ | [Blog](#) |
+| 23 | [23-python-fastapi](./23-python-fastapi) | `[Python]` FastAPI로 REST API 서버 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/48) |
+| 24 | [24-python-telegram-bot](./24-python-telegram-bot) | `[Python]` Telegram 봇 만들기 | 로컬 실행 ↓ | [Blog](#) |
 
 ---
 
@@ -101,6 +102,20 @@ uvicorn main:app --reload
 
 ---
 
+### 24-python-telegram-bot
+
+```bash
+cd 24-python-telegram-bot
+pip3 install -r requirements.txt
+cp .env.example .env     # .env 열어서 BOT_TOKEN 입력
+python3 main.py
+# → Telegram에서 봇과 대화 시작
+```
+
+> **BOT_TOKEN 발급**: Telegram에서 @BotFather → /newbot → 토큰 복사 → `.env`에 붙여넣기
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -140,8 +155,7 @@ flutter run                # 실기기에서 실행
 
 ### 백엔드 / 자동화 — Python
 
-- [x] `[Python]` FastAPI로 REST API 서버 만들기
-- [ ] `[Python]` Telegram 봇 만들기
+- [x] `[Python]` Telegram 봇 만들기
 
 ### 백엔드 — PHP
 
