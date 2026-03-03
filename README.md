@@ -29,7 +29,8 @@
 | 15 | [15-nextjs-prisma-todo](./15-nextjs-prisma-todo) | `[Next.js]` Prisma + PostgreSQL Todo 앱 만들기 | [Vercel](https://tutorial-nextjs-prisma-todo.vercel.app) | [Blog](https://lukaplayground.tistory.com/40) |
 | 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | [Blog](https://lukaplayground.tistory.com/41) |
 | 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/42) |
-| 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 로컬 실행 ↓ | — |
+| 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
+| 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | — |
 
 ---
 
@@ -89,8 +90,8 @@ flutter run                # 자동으로 에뮬레이터 감지
 
 - [x] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
 - [x] `[Flutter]` QR 코드 생성/스캔 앱 만들기
+- [x] `[Flutter]` 타이머 + 알림 앱 만들기
 - [ ] `[Flutter]` 날씨 앱 만들기 (API 연동)
-- [ ] `[Flutter]` 타이머 + 알림 앱 만들기
 - [ ] `[Flutter]` 간단한 메모 앱 만들기 (SQLite)
 
 ### 백엔드 / 자동화 — Python
