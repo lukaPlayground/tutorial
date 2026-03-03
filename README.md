@@ -32,8 +32,9 @@
 | 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 실기기 필요 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
 | 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/44) |
 | 20 | [20-flutter-memo](./20-flutter-memo) | `[Flutter]` 메모앱 만들기 (Hive NoSQL) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/45) |
-| 21 | [21-python-excel](./21-python-excel) | `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl) | 로컬 실행 ↓ | [Blog](#) |
-| 22 | [22-python-scraper](./22-python-scraper) | `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup) | 로컬 실행 ↓ | [Blog](#) |
+| 21 | [21-python-excel](./21-python-excel) | `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/46) |
+| 22 | [22-python-scraper](./22-python-scraper) | `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/47) |
+| 23 | [23-python-fastapi](./23-python-fastapi) | `[Python]` FastAPI로 REST API 서버 만들기 | 로컬 실행 ↓ | [Blog](#) |
 
 ---
 
@@ -88,6 +89,18 @@ python3 main.py
 
 ---
 
+### 23-python-fastapi
+
+```bash
+cd 23-python-fastapi
+pip3 install -r requirements.txt
+uvicorn main:app --reload
+# → http://localhost:8000      API 서버
+# → http://localhost:8000/docs Swagger UI
+```
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -127,8 +140,7 @@ flutter run                # 실기기에서 실행
 
 ### 백엔드 / 자동화 — Python
 
-- [x] `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup)
-- [ ] `[Python]` FastAPI로 REST API 서버 만들기
+- [x] `[Python]` FastAPI로 REST API 서버 만들기
 - [ ] `[Python]` Telegram 봇 만들기
 
 ### 백엔드 — PHP
