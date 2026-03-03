@@ -39,6 +39,7 @@
 | 25 | [25-php-login](./25-php-login) | `[PHP]` 로그인/회원가입 시스템 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/50) |
 | 26 | [26-php-board](./26-php-board) | `[PHP]` 게시판 CRUD 만들기 (SQLite · CSRF · 페이지네이션) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/51) |
 | 27 | [27-php-rest-api](./27-php-rest-api) | `[PHP]` REST API 서버 만들기 (순수 PHP · JSON · CORS) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/52) |
+| 28 | [28-php-file-upload](./28-php-file-upload) | `[PHP]` 파일 업로드 시스템 만들기 (다중 업로드 · 파일 교체 · 다운로드) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/53) |
 
 ---
 
@@ -161,6 +162,18 @@ php -S localhost:8080 index.php
 
 ---
 
+### 28-php-file-upload
+
+```bash
+cd 28-php-file-upload
+php -S localhost:8080
+# → http://localhost:8080
+```
+
+> **업로드 폴더**: `uploads/`가 자동 생성된다. `.gitignore`에 포함돼 있어 업로드된 파일은 저장소에 커밋되지 않는다.
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -200,8 +213,7 @@ flutter run                # 실기기에서 실행
 
 ### 백엔드 — PHP
 
-- [x] `[PHP]` REST API 서버 만들기
-- [ ] `[PHP]` 파일 업로드 시스템 만들기
+- [x] `[PHP]` 파일 업로드 시스템 만들기
 
 ### AI / 자동화
 
