@@ -1,0 +1,6 @@
+# Apache mod_rewrite — 모든 요청을 index.php로 라우팅
+# php -S 사용 시 불필요 (php -S localhost:8080 index.php)
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]

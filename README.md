@@ -38,6 +38,7 @@
 | 24 | [24-python-telegram-bot](./24-python-telegram-bot) | `[Python]` Telegram 봇 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/49) |
 | 25 | [25-php-login](./25-php-login) | `[PHP]` 로그인/회원가입 시스템 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/50) |
 | 26 | [26-php-board](./26-php-board) | `[PHP]` 게시판 CRUD 만들기 (SQLite · CSRF · 페이지네이션) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/51) |
+| 27 | [27-php-rest-api](./27-php-rest-api) | `[PHP]` REST API 서버 만들기 (순수 PHP · JSON · CORS) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/52) |
 
 ---
 
@@ -148,6 +149,18 @@ php -S localhost:8080
 
 ---
 
+### 27-php-rest-api
+
+```bash
+cd 27-php-rest-api
+php -S localhost:8080 index.php
+# → http://localhost:8080/api/tasks
+```
+
+> **라우터 스크립트 필수**: `php -S`는 `index.php`를 라우터로 지정해야 `/api/tasks` 경로가 동작한다. `index.php` 없이 실행하면 404가 난다.
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -187,8 +200,7 @@ flutter run                # 실기기에서 실행
 
 ### 백엔드 — PHP
 
-- [x] `[PHP]` 게시판 CRUD 만들기 (MySQL 연동)
-- [ ] `[PHP]` REST API 서버 만들기
+- [x] `[PHP]` REST API 서버 만들기
 - [ ] `[PHP]` 파일 업로드 시스템 만들기
 
 ### AI / 자동화
@@ -201,5 +213,5 @@ flutter run                # 실기기에서 실행
 
 ---
 
-_Last updated: 2026-03-04_
+_Last updated: 2026-03-04 (2)_
 
