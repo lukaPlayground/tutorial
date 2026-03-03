@@ -653,8 +653,8 @@
         allSections().forEach(s => s.classList.add('collapsed'));
         section.classList.remove('collapsed');
         setTimeout(() => {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 30);
+          section.scrollIntoView({ behavior: 'instant', block: 'start' });
+        }, 300);
       });
     });
 
