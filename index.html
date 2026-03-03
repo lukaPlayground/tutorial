@@ -29,6 +29,7 @@
     [data-cat="python"]  { --cat-color: #fbbf24; --cat-bg: rgba(251,191,36,0.10);  --cat-border: rgba(251,191,36,0.22); }
     [data-cat="flutter"] { --cat-color: #34d399; --cat-bg: rgba(52,211,153,0.10);  --cat-border: rgba(52,211,153,0.22); }
     [data-cat="backend"] { --cat-color: #22d3ee; --cat-bg: rgba(34,211,238,0.10);  --cat-border: rgba(34,211,238,0.22); }
+    [data-cat="ai"]      { --cat-color: #818cf8; --cat-bg: rgba(129,140,248,0.10); --cat-border: rgba(129,140,248,0.22); }
 
     /* ── Header ─────────────────────────────── */
     .header-wrap { max-width: 860px; margin: 0 auto; padding: 60px 20px 32px; }
@@ -221,9 +222,9 @@
       <p class="eyebrow">Luka's Playground</p>
       <h1>기술 스택별<br><span>튜토리얼</span> 모음</h1>
       <div class="header-meta">
-        <span><strong>28</strong>개 완료</span>
+        <span><strong>29</strong>개 완료</span>
         <span class="sep">·</span>
-        <span>웹 &nbsp;·&nbsp; 앱 &nbsp;·&nbsp; 백엔드 &nbsp;·&nbsp; 자동화</span>
+        <span>웹 &nbsp;·&nbsp; 앱 &nbsp;·&nbsp; 백엔드 &nbsp;·&nbsp; AI &nbsp;·&nbsp; 자동화</span>
       </div>
       <p>
         만들면서 배우는 기술 스택별 미니 프로젝트 시리즈.<br>
@@ -254,6 +255,9 @@
       <div class="nav-sep-v"></div>
       <a href="#sec-backend" class="nav-pill" data-cat="backend">
         <span class="nav-dot"></span>백엔드<span class="nav-count">5</span>
+      </a>
+      <a href="#sec-ai" class="nav-pill" data-cat="ai">
+        <span class="nav-dot"></span>AI<span class="nav-count">1</span>
       </a>
       <div class="nav-sep-v"></div>
       <a href="#sec-automation" class="nav-pill" data-cat="python">
@@ -588,6 +592,34 @@
             <div class="card-footer">
               <span class="btn btn-local">로컬 실행</span>
               <a href="https://github.com/lukaPlayground/tutorial/tree/main/28-php-file-upload" target="_blank" class="btn btn-code">코드</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- AI ─────────────────────────────────────── -->
+    <section class="section collapsed" id="sec-ai" data-cat="ai">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">AI</span>
+        <span class="cat-sep">·</span>
+        <span class="cat-name">Claude API · PHP</span>
+        <span class="cat-spacer"></span>
+        <span class="cat-count">1개</span>
+        <span class="toggle-icon">▾</span>
+      </div>
+      <div class="grid-wrap">
+        <div class="card-grid">
+
+          <div class="card">
+            <div class="card-header"><span class="card-num">29</span><span class="card-tag">Claude API</span></div>
+            <div class="card-title">AI 챗봇 웹앱</div>
+            <div class="card-desc">Anthropic PHP SDK · 멀티턴 대화 · 시스템 프롬프트 · 모델 선택 · 토큰 사용량 추적</div>
+            <div class="card-footer">
+              <span class="btn btn-local">로컬 실행</span>
+              <a href="https://github.com/lukaPlayground/tutorial/tree/main/29-claude-chatbot" target="_blank" class="btn btn-code">코드</a>
             </div>
           </div>
 

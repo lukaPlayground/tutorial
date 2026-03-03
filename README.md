@@ -40,6 +40,7 @@
 | 26 | [26-php-board](./26-php-board) | `[PHP]` 게시판 CRUD 만들기 (SQLite · CSRF · 페이지네이션) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/51) |
 | 27 | [27-php-rest-api](./27-php-rest-api) | `[PHP]` REST API 서버 만들기 (순수 PHP · JSON · CORS) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/52) |
 | 28 | [28-php-file-upload](./28-php-file-upload) | `[PHP]` 파일 업로드 시스템 만들기 (다중 업로드 · 파일 교체 · 다운로드) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/53) |
+| 29 | [29-claude-chatbot](./29-claude-chatbot) | `[Claude API]` 나만의 AI 챗봇 웹앱 만들기 (PHP · Anthropic SDK · 멀티턴) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/54) |
 
 ---
 
@@ -174,6 +175,20 @@ php -S localhost:8080
 
 ---
 
+### 29-claude-chatbot
+
+```bash
+cd 29-claude-chatbot
+composer install
+cp .env.example .env     # .env 열어서 ANTHROPIC_API_KEY 입력
+php -S localhost:8080
+# → http://localhost:8080
+```
+
+> **API 키 발급**: [console.anthropic.com](https://console.anthropic.com) → API Keys → Create Key → `.env`에 붙여넣기
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -211,13 +226,9 @@ flutter run                # 실기기에서 실행
 
 ## 진행 예정
 
-### 백엔드 — PHP
-
-- [x] `[PHP]` 파일 업로드 시스템 만들기
-
 ### AI / 자동화
 
-- [ ] `[Claude API]` 나만의 AI 챗봇 웹앱 만들기
+- [x] `[Claude API]` 나만의 AI 챗봇 웹앱 만들기
 - [ ] `[Pollinations.ai]` 이미지 생성기 만들기 (API 키 불필요, 무료)
 - [ ] `[Transformers.js]` 이미지 설명 생성기 만들기 (브라우저 내 AI 추론, API 키 불필요 / 첫 로드 ~200MB)
 - [ ] `[Python + Claude]` PDF 요약 자동화 스크립트 만들기
@@ -225,5 +236,5 @@ flutter run                # 실기기에서 실행
 
 ---
 
-_Last updated: 2026-03-04 (2)_
+_Last updated: 2026-03-04 (3)_
 
