@@ -28,7 +28,7 @@
     [data-cat="nextjs"] { --cat-color: #cbd5e1; --cat-bg: rgba(203,213,225,0.08); --cat-border: rgba(203,213,225,0.18); }
     [data-cat="python"]  { --cat-color: #fbbf24; --cat-bg: rgba(251,191,36,0.10);  --cat-border: rgba(251,191,36,0.22); }
     [data-cat="flutter"] { --cat-color: #34d399; --cat-bg: rgba(52,211,153,0.10);  --cat-border: rgba(52,211,153,0.22); }
-    [data-cat="php"]     { --cat-color: #818cf8; --cat-bg: rgba(129,140,248,0.10); --cat-border: rgba(129,140,248,0.22); }
+    [data-cat="backend"] { --cat-color: #22d3ee; --cat-bg: rgba(34,211,238,0.10);  --cat-border: rgba(34,211,238,0.22); }
 
     /* ── Header ─────────────────────────────── */
     .header-wrap { max-width: 860px; margin: 0 auto; padding: 60px 20px 32px; }
@@ -219,7 +219,7 @@
       <div class="header-meta">
         <span><strong>25</strong>개 완료</span>
         <span class="sep">·</span>
-        <span>웹 &nbsp;·&nbsp; 앱 &nbsp;·&nbsp; Python</span>
+        <span>웹 &nbsp;·&nbsp; 앱 &nbsp;·&nbsp; 백엔드 &nbsp;·&nbsp; 자동화</span>
       </div>
       <p>
         만들면서 배우는 기술 스택별 미니 프로젝트 시리즈.<br>
@@ -246,12 +246,12 @@
         <span class="nav-dot"></span>Flutter<span class="nav-count">4</span>
       </a>
       <div class="nav-sep-v"></div>
-      <a href="#sec-python" class="nav-pill" data-cat="python">
-        <span class="nav-dot"></span>Python<span class="nav-count">5</span>
+      <a href="#sec-backend" class="nav-pill" data-cat="backend">
+        <span class="nav-dot"></span>백엔드<span class="nav-count">2</span>
       </a>
       <div class="nav-sep-v"></div>
-      <a href="#sec-php" class="nav-pill" data-cat="php">
-        <span class="nav-dot"></span>PHP<span class="nav-count">1</span>
+      <a href="#sec-automation" class="nav-pill" data-cat="python">
+        <span class="nav-dot"></span>자동화<span class="nav-count">4</span>
       </a>
     </div>
   </nav>
@@ -521,15 +521,53 @@
       </div>
     </section>
 
-    <!-- 백엔드 · Python ────────────────────────── -->
-    <section class="section" id="sec-python" data-cat="python">
+    <!-- 백엔드 ─────────────────────────────────── -->
+    <section class="section" id="sec-backend" data-cat="backend">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">백엔드</span>
         <span class="cat-sep">·</span>
+        <span class="cat-name">Python · PHP</span>
+        <span class="cat-spacer"></span>
+        <span class="cat-count">2개</span>
+        <span class="toggle-icon">▾</span>
+      </div>
+      <div class="grid-wrap">
+        <div class="card-grid">
+
+          <div class="card">
+            <div class="card-header"><span class="card-num">23</span><span class="card-tag">Python</span></div>
+            <div class="card-title">FastAPI REST API 서버</div>
+            <div class="card-desc">FastAPI · Pydantic v2 · uvicorn · CRUD · Swagger UI 자동 문서화</div>
+            <div class="card-footer">
+              <span class="btn btn-local">로컬 실행</span>
+              <a href="https://github.com/lukaPlayground/tutorial/tree/main/23-python-fastapi" target="_blank" class="btn btn-code">코드</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><span class="card-num">25</span><span class="card-tag">PHP</span></div>
+            <div class="card-title">로그인/회원가입 시스템</div>
+            <div class="card-desc">PDO SQLite · password_hash · CSRF 토큰 · session_regenerate_id · XSS 방어</div>
+            <div class="card-footer">
+              <span class="btn btn-local">로컬 실행</span>
+              <a href="https://github.com/lukaPlayground/tutorial/tree/main/25-php-login" target="_blank" class="btn btn-code">코드</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 자동화 · Python ─────────────────────────── -->
+    <section class="section" id="sec-automation" data-cat="python">
+      <div class="section-head">
+        <span class="cat-dot"></span>
+        <span class="cat-group">자동화</span>
+        <span class="cat-sep">·</span>
         <span class="cat-name">Python</span>
         <span class="cat-spacer"></span>
-        <span class="cat-count">5개</span>
+        <span class="cat-count">4개</span>
         <span class="toggle-icon">▾</span>
       </div>
       <div class="grid-wrap">
@@ -566,50 +604,12 @@
           </div>
 
           <div class="card">
-            <div class="card-header"><span class="card-num">23</span><span class="card-tag">Python</span></div>
-            <div class="card-title">FastAPI REST API 서버</div>
-            <div class="card-desc">FastAPI · Pydantic v2 · uvicorn · CRUD · Swagger UI 자동 문서화</div>
-            <div class="card-footer">
-              <span class="btn btn-local">로컬 실행</span>
-              <a href="https://github.com/lukaPlayground/tutorial/tree/main/23-python-fastapi" target="_blank" class="btn btn-code">코드</a>
-            </div>
-          </div>
-
-          <div class="card">
             <div class="card-header"><span class="card-num">24</span><span class="card-tag">Python</span></div>
             <div class="card-title">Telegram 봇</div>
             <div class="card-desc">python-telegram-bot · async/await · CommandHandler · InlineKeyboard · Open-Meteo</div>
             <div class="card-footer">
               <span class="btn btn-local">로컬 실행</span>
               <a href="https://github.com/lukaPlayground/tutorial/tree/main/24-python-telegram-bot" target="_blank" class="btn btn-code">코드</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- 백엔드 · PHP ──────────────────────────── -->
-    <section class="section" id="sec-php" data-cat="php">
-      <div class="section-head">
-        <span class="cat-dot"></span>
-        <span class="cat-group">백엔드</span>
-        <span class="cat-sep">·</span>
-        <span class="cat-name">PHP</span>
-        <span class="cat-spacer"></span>
-        <span class="cat-count">1개</span>
-        <span class="toggle-icon">▾</span>
-      </div>
-      <div class="grid-wrap">
-        <div class="card-grid">
-
-          <div class="card">
-            <div class="card-header"><span class="card-num">25</span><span class="card-tag">PHP</span></div>
-            <div class="card-title">로그인/회원가입 시스템</div>
-            <div class="card-desc">PDO SQLite · password_hash · CSRF 토큰 · session_regenerate_id · XSS 방어</div>
-            <div class="card-footer">
-              <span class="btn btn-local">로컬 실행</span>
-              <a href="https://github.com/lukaPlayground/tutorial/tree/main/25-php-login" target="_blank" class="btn btn-code">코드</a>
             </div>
           </div>
 
