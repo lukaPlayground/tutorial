@@ -36,7 +36,8 @@
 | 22 | [22-python-scraper](./22-python-scraper) | `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/47) |
 | 23 | [23-python-fastapi](./23-python-fastapi) | `[Python]` FastAPI로 REST API 서버 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/48) |
 | 24 | [24-python-telegram-bot](./24-python-telegram-bot) | `[Python]` Telegram 봇 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/49) |
-| 25 | [25-php-login](./25-php-login) | `[PHP]` 로그인/회원가입 시스템 만들기 | 로컬 실행 ↓ | [Blog](#) |
+| 25 | [25-php-login](./25-php-login) | `[PHP]` 로그인/회원가입 시스템 만들기 | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/50) |
+| 26 | [26-php-board](./26-php-board) | `[PHP]` 게시판 CRUD 만들기 (SQLite · CSRF · 페이지네이션) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/51) |
 
 ---
 
@@ -135,6 +136,18 @@ php -S localhost:8080
 
 ---
 
+### 26-php-board
+
+```bash
+cd 26-php-board
+php -S localhost:8080
+# → http://localhost:8080
+```
+
+> **데이터 저장**: SQLite 파일(`data/board.db`)이 자동 생성된다. MySQL 전환 시 `db.php`의 DSN 한 줄만 변경하면 된다.
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -174,8 +187,7 @@ flutter run                # 실기기에서 실행
 
 ### 백엔드 — PHP
 
-- [x] `[PHP]` 로그인/회원가입 시스템 만들기
-- [ ] `[PHP]` 게시판 CRUD 만들기 (MySQL 연동)
+- [x] `[PHP]` 게시판 CRUD 만들기 (MySQL 연동)
 - [ ] `[PHP]` REST API 서버 만들기
 - [ ] `[PHP]` 파일 업로드 시스템 만들기
 
@@ -189,5 +201,5 @@ flutter run                # 실기기에서 실행
 
 ---
 
-_Last updated: 2026-03-03_
+_Last updated: 2026-03-04_
 
