@@ -334,7 +334,7 @@
     </section>
 
     <!-- 웹 · React ─────────────────────────────── -->
-    <section class="section" id="sec-react" data-cat="react">
+    <section class="section collapsed" id="sec-react" data-cat="react">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">웹</span>
@@ -402,7 +402,7 @@
     </section>
 
     <!-- 웹 · Next.js ──────────────────────────── -->
-    <section class="section" id="sec-nextjs" data-cat="nextjs">
+    <section class="section collapsed" id="sec-nextjs" data-cat="nextjs">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">웹</span>
@@ -470,7 +470,7 @@
     </section>
 
     <!-- 앱 · Flutter ──────────────────────────── -->
-    <section class="section" id="sec-flutter" data-cat="flutter">
+    <section class="section collapsed" id="sec-flutter" data-cat="flutter">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">앱</span>
@@ -528,7 +528,7 @@
     </section>
 
     <!-- 백엔드 ─────────────────────────────────── -->
-    <section class="section" id="sec-backend" data-cat="backend">
+    <section class="section collapsed" id="sec-backend" data-cat="backend">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">백엔드</span>
@@ -566,7 +566,7 @@
     </section>
 
     <!-- 자동화 · Python ─────────────────────────── -->
-    <section class="section" id="sec-automation" data-cat="python">
+    <section class="section collapsed" id="sec-automation" data-cat="python">
       <div class="section-head">
         <span class="cat-dot"></span>
         <span class="cat-group">자동화</span>
@@ -632,21 +632,27 @@
   </div><!-- /content-wrap -->
 
   <script>
-    /* ── 섹션 접기/펼치기 ─────────────────────── */
+    const allSections = () => document.querySelectorAll('.section[id]');
+
+    /* ── 섹션 접기/펼치기 (아코디언) ───────────── */
     document.querySelectorAll('.section-head').forEach(head => {
       head.addEventListener('click', () => {
-        head.closest('.section').classList.toggle('collapsed');
+        const section = head.closest('.section');
+        const isCollapsed = section.classList.contains('collapsed');
+        allSections().forEach(s => s.classList.add('collapsed'));
+        if (isCollapsed) section.classList.remove('collapsed');
       });
     });
 
-    /* ── Nav 클릭: 펼치고 스크롤 이동 ───────────── */
+    /* ── Nav 클릭: 해당 섹션만 펼치고 스크롤 이동 ── */
     document.querySelectorAll('.nav-pill[href]').forEach(pill => {
       pill.addEventListener('click', e => {
         e.preventDefault();
         const section = document.getElementById(pill.getAttribute('href').slice(1));
         if (!section) return;
-        section.classList.remove('collapsed');      // 먼저 펼치기
-        setTimeout(() => {                          // 레이아웃 업데이트 후 스크롤
+        allSections().forEach(s => s.classList.add('collapsed'));
+        section.classList.remove('collapsed');
+        setTimeout(() => {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 30);
       });
