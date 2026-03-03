@@ -115,6 +115,10 @@
     .nav-dot   { width: 6px; height: 6px; border-radius: 50%; background: var(--cat-color); flex-shrink: 0; }
     .nav-count { font-size: 10px; opacity: .55; background: rgba(255,255,255,0.07); border-radius: 99px; padding: 1px 6px; }
     .nav-sep-v { width: 1px; height: 16px; background: var(--border); flex-shrink: 0; margin: 0 6px; }
+    .nav-group-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); opacity: .4; flex-shrink: 0; white-space: nowrap; padding-left: 2px;
+    }
 
     /* ── Content ─────────────────────────────── */
     .content-wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
@@ -232,6 +236,7 @@
   <!-- ── Sticky Nav ──────────────────────────── -->
   <nav class="sticky-nav">
     <div class="nav-inner">
+      <span class="nav-group-label">웹</span>
       <a href="#sec-html"   class="nav-pill" data-cat="html">
         <span class="nav-dot"></span>HTML/CSS/JS<span class="nav-count">5</span>
       </a>
@@ -242,6 +247,7 @@
         <span class="nav-dot"></span>Next.js<span class="nav-count">5</span>
       </a>
       <div class="nav-sep-v"></div>
+      <span class="nav-group-label">앱</span>
       <a href="#sec-flutter" class="nav-pill" data-cat="flutter">
         <span class="nav-dot"></span>Flutter<span class="nav-count">4</span>
       </a>
