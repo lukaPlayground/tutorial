@@ -30,8 +30,9 @@
 | 16 | [16-nextjs-nextauth](./16-nextjs-nextauth) | `[Next.js]` NextAuth로 소셜 로그인 구현하기 | [Vercel](https://tutorial-nextjs-nextauth.vercel.app) | [Blog](https://lukaplayground.tistory.com/41) |
 | 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/42) |
 | 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 실기기 필요 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
-| 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | — |
-| 20 | [20-flutter-memo](./20-flutter-memo) | `[Flutter]` 메모앱 만들기 (Hive NoSQL) | 로컬 실행 ↓ | — |
+| 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/44) |
+| 20 | [20-flutter-memo](./20-flutter-memo) | `[Flutter]` 메모앱 만들기 (Hive NoSQL) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/45) |
+| 21 | [21-python-excel](./21-python-excel) | `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl) | 로컬 실행 ↓ | [Blog](#) |
 
 ---
 
@@ -40,6 +41,17 @@
 Python 스크립트는 로컬에서 직접 실행한다. Python 3.8 이상 필요.
 
 > Python 설치: https://www.python.org/downloads/
+
+### 21-python-excel
+
+```bash
+cd 21-python-excel
+pip3 install -r requirements.txt
+python3 main.py
+# → output/monthly_sales_report.xlsx 생성
+```
+
+---
 
 ### 04-python-youtube-transcript
 
@@ -101,13 +113,9 @@ flutter run                # 실기기에서 실행
 
 ## 진행 예정
 
-### 앱 — Flutter
-
-- [x] `[Flutter]` 메모앱 만들기 (Hive NoSQL)
-
 ### 백엔드 / 자동화 — Python
 
-- [ ] `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl)
+- [x] `[Python]` 엑셀 자동화 스크립트 만들기 (openpyxl)
 - [ ] `[Python]` 웹 스크래퍼 만들기 (BeautifulSoup)
 - [ ] `[Python]` FastAPI로 REST API 서버 만들기
 - [ ] `[Python]` Telegram 봇 만들기
