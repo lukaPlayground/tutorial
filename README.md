@@ -31,6 +31,7 @@
 | 17 | [17-flutter-budget-app](./17-flutter-budget-app) | `[Flutter]` 가계부 앱 만들기 (로컬 저장) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/42) |
 | 18 | [18-flutter-qr-scanner](./18-flutter-qr-scanner) | `[Flutter]` QR 코드 생성/스캔 앱 만들기 | 실기기 필요 ↓ | [Blog](https://lukaplayground.tistory.com/43) |
 | 19 | [19-flutter-timer](./19-flutter-timer) | `[Flutter]` 뽀모도로 타이머 앱 만들기 (로컬 알림) | 로컬 실행 ↓ | — |
+| 20 | [20-flutter-memo](./20-flutter-memo) | `[Flutter]` 메모앱 만들기 (Hive NoSQL) | 로컬 실행 ↓ | — |
 
 ---
 
@@ -68,7 +69,7 @@ streamlit run app.py
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
 아래 방법으로 로컬에서 실행한다.
 
-### 시뮬레이터 / 에뮬레이터 (17, 19번)
+### 시뮬레이터 / 에뮬레이터 (17, 19, 20번)
 
 #### Mac (iOS Simulator)
 ```bash
@@ -102,10 +103,7 @@ flutter run                # 실기기에서 실행
 
 ### 앱 — Flutter
 
-- [x] `[Flutter]` 가계부 앱 만들기 (로컬 저장)
-- [x] `[Flutter]` QR 코드 생성/스캔 앱 만들기
-- [x] `[Flutter]` 타이머 + 알림 앱 만들기
-- [ ] `[Flutter]` 간단한 메모 앱 만들기 (SQLite)
+- [x] `[Flutter]` 메모앱 만들기 (Hive NoSQL)
 
 ### 백엔드 / 자동화 — Python
 
