@@ -238,14 +238,13 @@ header {
 #errorServerDown a {
   color: #fb923c;
   text-decoration: underline;
-  cursor: pointer;
 }
 #errorServerDown a:hover {
   color: #fdba74;
 }
 /* 진단 중 텍스트 */
 #errorChecking {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text-dim);
   font-size: 13px;
 }
 
