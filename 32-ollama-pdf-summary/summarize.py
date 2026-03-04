@@ -5,7 +5,6 @@ Ollama PDF 요약 자동화 스크립트
 """
 
 import argparse
-import os
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -46,7 +45,7 @@ def main():
 
     # 출력 폴더 준비
     output_dir = Path(args.output)
-    os.makedirs(output_dir, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # 처리 결과 추적
     success, failed = 0, 0
