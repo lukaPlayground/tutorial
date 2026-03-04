@@ -148,6 +148,31 @@ def summarize_text(text: str, model: str, lang: str, chunks: list[str]) -> str:
     return call_ollama(final_tmpl.format(text=combined), model)
 
 
+def save_summary(output_dir: Path, pdf_path: Path, summary: str,
+                 page_count: int, model: str) -> Path:
+    """
+    요약을 Markdown 파일로 저장.
+    파일명: {원본파일명}_summary.md
+    """
+    stem = pdf_path.stem  # 확장자 제외 파일명
+    out_path = output_dir / f"{stem}_summary.md"
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    content = f"""# {pdf_path.name} 요약
+
+**파일**: {pdf_path.name}
+**페이지 수**: {page_count}
+**처리 일시**: {now}
+**모델**: {model}
+
+---
+
+{summary}
+"""
+    out_path.write_text(content, encoding="utf-8")
+    return out_path
+
+
 def main():
     args = parse_args()
 
@@ -182,6 +207,8 @@ def main():
             print(f"  요약 생성 중... (모델: {args.model})")
             summary = summarize_text(full_text, args.model, args.lang, chunks)
             print(f"  요약 완료 ({len(summary)}자)")
+            out_path = save_summary(output_dir, pdf_path, summary, page_count, args.model)
+            print(f"  저장: {out_path}")
             success += 1
         except Exception as e:
             print(f"  [ERROR] {pdf_path.name}: {e}")
