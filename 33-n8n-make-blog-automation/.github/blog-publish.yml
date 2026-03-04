@@ -1,0 +1,83 @@
+# blog-publish.yml
+# 트리거: tistory-blog/ 폴더에 .md 파일이 push될 때 실행
+# 역할: 변경된 .md 파일을 Markdown→HTML 변환 후 n8n/Make Webhook 호출
+
+name: Blog Auto Publish
+
+on:
+  push:
+    paths:
+      - 'tistory-blog/**/*.md'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # HEAD~1 diff를 위해 2개 필요
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install markdown python-frontmatter
+
+      - name: Get changed .md files
+        id: changed_files
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'tistory-blog/*.md')
+          echo "files=$CHANGED" >> $GITHUB_OUTPUT
+          echo "변경된 파일:"
+          echo "$CHANGED"
+
+      - name: Process and publish each file
+        env:
+          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
+        run: |
+          FILES="${{ steps.changed_files.outputs.files }}"
+          if [ -z "$FILES" ]; then
+            echo "변경된 .md 파일 없음. 종료."
+            exit 0
+          fi
+
+          SCRIPT="33-n8n-make-blog-automation/scripts/process_md.py"
+
+          for FILE in $FILES; do
+            echo "처리 중: $FILE"
+
+            # JSON 페이로드 생성
+            PAYLOAD=$(python3 "$SCRIPT" "$FILE")
+            if [ $? -ne 0 ]; then
+              echo "처리 실패: $FILE — 건너뜀"
+              continue
+            fi
+
+            echo "페이로드 (title): $(echo $PAYLOAD | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d["title"])')"
+
+            # n8n Webhook 호출 (설정된 경우만)
+            if [ -n "$N8N_WEBHOOK_URL" ]; then
+              echo "→ n8n 전송 중..."
+              curl -s -X POST "$N8N_WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -d "$PAYLOAD" \
+                --max-time 30 || echo "n8n 호출 실패 (계속 진행)"
+            fi
+
+            # Make Webhook 호출 (설정된 경우만)
+            if [ -n "$MAKE_WEBHOOK_URL" ]; then
+              echo "→ Make 전송 중..."
+              curl -s -X POST "$MAKE_WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -d "$PAYLOAD" \
+                --max-time 30 || echo "Make 호출 실패 (계속 진행)"
+            fi
+
+            echo "완료: $FILE"
+          done
