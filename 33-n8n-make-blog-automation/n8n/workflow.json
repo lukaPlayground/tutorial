@@ -1,0 +1,75 @@
+{
+  "name": "Tistory Blog Auto Publish",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tistory-publish",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c1a2b3d4-0001-0001-0001-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "tistory-publish"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.tistory.com/apis/post/write",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "access_token", "value": "={{ $env.TISTORY_ACCESS_TOKEN }}" },
+            { "name": "output",       "value": "json" },
+            { "name": "blogName",     "value": "={{ $env.TISTORY_BLOG_NAME }}" },
+            { "name": "title",        "value": "={{ $json.title }}" },
+            { "name": "content",      "value": "={{ $json.content }}" },
+            { "name": "visibility",   "value": "={{ $json.visibility }}" },
+            { "name": "tag",          "value": "={{ $json.tags }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c1a2b3d4-0001-0001-0001-000000000002",
+      "name": "Tistory API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"file\": \"{{ $('Webhook').item.json.filename }}\",\n  \"tistory\": {{ JSON.stringify($json.tistory ?? {}) }}\n}",
+        "options": {}
+      },
+      "id": "c1a2b3d4-0001-0001-0001-000000000003",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [{ "node": "Tistory API", "type": "main", "index": 0 }]
+      ]
+    },
+    "Tistory API": {
+      "main": [
+        [{ "node": "Respond to Webhook", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
