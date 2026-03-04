@@ -43,6 +43,7 @@
 | 29 | [29-gemini-chatbot](./29-gemini-chatbot) | `[Gemini API]` 나만의 AI 챗봇 웹앱 만들기 (Gemini · 멀티턴) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/54) |
 | 30 | [30-pollinations-image](./30-pollinations-image) | `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음 · Vanilla JS · 무료) | [GitHub Pages](https://lukaplayground.github.io/tutorial/30-pollinations-image/) | [Blog](https://lukaplayground.tistory.com/55) |
 | 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 서버 필요 ↓ | [Blog](https://lukaplayground.tistory.com/56) |
+| 32 | [32-ollama-pdf-summary](./32-ollama-pdf-summary) | `[Python + Ollama]` PDF 요약 자동화 스크립트 (Ollama 로컬 LLM · PyMuPDF · 배치 처리) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/) |
 
 ---
 
@@ -212,6 +213,22 @@ python3 -m http.server 8031
 
 ---
 
+### 32-ollama-pdf-summary
+
+```bash
+# Ollama 설치 및 모델 준비 (최초 1회)
+ollama pull llama3.2
+
+# 의존성 설치
+cd 32-ollama-pdf-summary
+pip install -r requirements.txt
+
+# 실행 (PDF 파일이 있는 폴더 지정)
+python3 summarize.py ./sample/ --model llama3.2
+```
+
+---
+
 ## 로컬 실행 안내 (Flutter)
 
 Flutter 앱은 네이티브 기능을 사용해 웹 데모가 불가능하다.
@@ -251,10 +268,9 @@ flutter run                # 실기기에서 실행
 
 ### AI / 자동화
 
-- [ ] `[Python + Claude]` PDF 요약 자동화 스크립트 만들기
 - [ ] `[n8n / Make]` 블로그 포스팅 자동화 워크플로우 만들기
 
 ---
 
-_Last updated: 2026-03-04 (4)_
+_Last updated: 2026-03-05 (5)_
 
