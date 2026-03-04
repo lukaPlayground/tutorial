@@ -1,1 +1,313 @@
-/* Tutorial 30 — Pollinations Image Generator */
+/* ── Reset & Variables ─────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:       #0f1117;
+  --surface:  #1a1d27;
+  --surface2: #22263a;
+  --border:   rgba(255, 255, 255, 0.08);
+  --text:     rgba(255, 255, 255, 0.90);
+  --text-dim: rgba(255, 255, 255, 0.40);
+  --accent:   #7c3aed;
+  --accent2:  #ec4899;
+  --gradient: linear-gradient(135deg, #7c3aed, #ec4899);
+  --radius:   12px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+/* ── Layout ──────────────────────────────────────────── */
+.layout {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 57px);
+  overflow: hidden;
+}
+
+/* ── Controls (Left) ─────────────────────────────────── */
+.controls {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.label-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+}
+
+.field .hint {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.field textarea,
+.field input[type="number"],
+.field select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.field textarea:focus,
+.field input[type="number"]:focus,
+.field select:focus {
+  border-color: rgba(124, 58, 237, 0.55);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.55;
+}
+
+.field select option { background: var(--surface2); }
+
+/* 너비·높이 나란히 */
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+.field-row .field { flex: 1; }
+
+/* 시드 행 */
+.seed-row {
+  display: flex;
+  gap: 8px;
+}
+.seed-row input { flex: 1; }
+.seed-row button {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 18px;
+  padding: 8px 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.seed-row button:hover { background: var(--bg); }
+
+/* 생성 버튼 */
+.btn-generate {
+  background: var(--gradient);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 2px;
+}
+.btn-generate:hover  { opacity: 0.88; }
+.btn-generate:active { transform: scale(0.98); }
+.btn-generate:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Viewer (Right) ──────────────────────────────────── */
+.viewer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 18px;
+  overflow-y: auto;
+}
+
+/* 이미지 영역 */
+.image-area {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  min-height: 300px;
+  max-height: 530px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 플레이스홀더 */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-dim);
+  padding: 40px;
+}
+.placeholder-icon { font-size: 56px; }
+.placeholder p    { font-size: 15px; text-align: center; line-height: 1.65; }
+
+/* 스피너 */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 생성된 이미지 */
+#mainImg {
+  max-width: 100%;
+  max-height: 530px;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius);
+}
+
+/* 에러 메시지 */
+.error-msg {
+  color: #f87171;
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
+  line-height: 1.7;
+}
+.error-msg small { color: var(--text-dim); font-size: 12px; }
+
+/* 액션 버튼 */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.btn-action {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-action:hover {
+  background: var(--surface2);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* 히스토리 */
+.history-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+  gap: 8px;
+}
+.history-item {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, transform 0.15s;
+  background: var(--surface2);
+}
+.history-item:hover {
+  border-color: var(--accent);
+  transform: scale(1.06);
+}
+.history-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Shake (빈 프롬프트 경고) */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+.shake {
+  animation: shake 0.4s ease;
+  border-color: #f87171 !important;
+}
+
+/* ── 스크롤바 ──────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
