@@ -44,7 +44,7 @@
 | 30 | [30-pollinations-image](./30-pollinations-image) | `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음 · Vanilla JS · 무료) | [GitHub Pages](https://lukaplayground.github.io/tutorial/30-pollinations-image/) | [Blog](https://lukaplayground.tistory.com/55) |
 | 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/56) |
 | 32 | [32-ollama-pdf-summary](./32-ollama-pdf-summary) | `[Python + Ollama]` PDF 요약 자동화 스크립트 (Ollama 로컬 LLM · PyMuPDF · 배치 처리) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/57) |
-| 33 | [33-n8n-make-blog-automation](./33-n8n-make-blog-automation) | `[n8n + Make]` 블로그 포스팅 자동화 (GitHub Actions · Markdown→HTML · Tistory API) | 클라우드 + 로컬 | [Blog](https://lukaplayground.tistory.com/) |
+| 33 | [33-n8n-make-blog-automation](./33-n8n-make-blog-automation) | `[n8n + Make]` 블로그 포스팅 자동화 (GitHub Actions · Markdown→HTML · Tistory API) | 클라우드 + 로컬 | [Blog](https://lukaplayground.tistory.com/58) |
 
 ---
 
@@ -265,11 +265,5 @@ flutter run                # 실기기에서 실행
 
 ---
 
-## 진행 예정
-
-### AI / 자동화
-
----
-
-_Last updated: 2026-03-05 (6)_
+_Last updated: 2026-03-05_
 
