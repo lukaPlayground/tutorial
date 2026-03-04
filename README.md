@@ -42,8 +42,9 @@
 | 28 | [28-php-file-upload](./28-php-file-upload) | `[PHP]` 파일 업로드 시스템 만들기 (다중 업로드 · 파일 교체 · 다운로드) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/53) |
 | 29 | [29-gemini-chatbot](./29-gemini-chatbot) | `[Gemini API]` 나만의 AI 챗봇 웹앱 만들기 (Gemini · 멀티턴) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/54) |
 | 30 | [30-pollinations-image](./30-pollinations-image) | `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음 · Vanilla JS · 무료) | [GitHub Pages](https://lukaplayground.github.io/tutorial/30-pollinations-image/) | [Blog](https://lukaplayground.tistory.com/55) |
-| 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 서버 필요 ↓ | [Blog](https://lukaplayground.tistory.com/56) |
-| 32 | [32-ollama-pdf-summary](./32-ollama-pdf-summary) | `[Python + Ollama]` PDF 요약 자동화 스크립트 (Ollama 로컬 LLM · PyMuPDF · 배치 처리) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/) |
+| 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/56) |
+| 32 | [32-ollama-pdf-summary](./32-ollama-pdf-summary) | `[Python + Ollama]` PDF 요약 자동화 스크립트 (Ollama 로컬 LLM · PyMuPDF · 배치 처리) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/57) |
+| 33 | [33-n8n-make-blog-automation](./33-n8n-make-blog-automation) | `[n8n + Make]` 블로그 포스팅 자동화 (GitHub Actions · Markdown→HTML · Tistory API) | 클라우드 + 로컬 | [Blog](https://lukaplayground.tistory.com/) |
 
 ---
 
@@ -268,9 +269,7 @@ flutter run                # 실기기에서 실행
 
 ### AI / 자동화
 
-- [ ] `[n8n / Make]` 블로그 포스팅 자동화 워크플로우 만들기
-
 ---
 
-_Last updated: 2026-03-05 (5)_
+_Last updated: 2026-03-05 (6)_
 
