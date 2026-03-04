@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+import fitz  # PyMuPDF
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -32,6 +34,46 @@ def scan_pdfs(folder_path: str) -> list[Path]:
     return pdfs
 
 
+def extract_text(pdf_path: Path) -> list[str]:
+    """
+    PDF에서 페이지별 텍스트를 추출해 리스트로 반환.
+    스캔 PDF(텍스트 없음)이면 빈 리스트 반환.
+    """
+    doc = fitz.open(str(pdf_path))
+    pages = []
+    for page in doc:
+        text = page.get_text().strip()
+        if text:
+            pages.append(text)
+    doc.close()
+    return pages
+
+
+def chunk_pages(pages: list[str], max_chars: int = 20000) -> list[str]:
+    """
+    페이지 경계 기준으로 텍스트를 청크로 분할.
+    각 청크는 max_chars 이하 (페이지 중간에서 자르지 않음).
+    """
+    chunks = []
+    current_chunk = []
+    current_len = 0
+
+    for page_text in pages:
+        page_len = len(page_text)
+        if current_len + page_len > max_chars and current_chunk:
+            chunks.append("\n\n".join(current_chunk))
+            current_chunk = [page_text]
+            current_len = page_len
+        else:
+            current_chunk.append(page_text)
+            current_len += page_len
+
+    if current_chunk:
+        chunks.append("\n\n".join(current_chunk))
+
+    return chunks
+
+
 def main():
     args = parse_args()
 
@@ -53,8 +95,17 @@ def main():
     for pdf_path in pdfs:
         print(f"\n처리 중: {pdf_path.name}")
         try:
-            # TODO: 텍스트 추출 + 요약 (Task 3, 4에서 구현)
-            print(f"  [STUB] {pdf_path.name} — 아직 구현 전")
+            pages = extract_text(pdf_path)
+            if not pages:
+                print(f"  [SKIP] 텍스트 없음 (스캔 PDF)")
+                failed += 1
+                continue
+
+            full_text = "\n\n".join(pages)
+            chunks = chunk_pages(pages)
+            page_count = len(pages)
+            print(f"  페이지: {page_count} | 텍스트: {len(full_text):,}자 | 청크: {len(chunks)}개")
+            # TODO: 요약 (Task 4에서 구현)
             success += 1
         except Exception as e:
             print(f"  [ERROR] {pdf_path.name}: {e}")
