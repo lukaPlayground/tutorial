@@ -735,6 +735,23 @@
 
   <script>
     const allSections = () => document.querySelectorAll('.section[id]');
+    const navPills = document.querySelectorAll('.nav-pill[href]');
+    const NAV_H = 56; // sticky nav 높이
+
+    /* ── 현재 섹션 nav 하이라이트 (scroll 기반) ─
+       - getBoundingClientRect() 사용 → collapsed 높이 0 섹션도 정상 감지
+       - 순차 탐색 후 마지막 일치 항목만 반영 → 동시 여러 항목 튀는 문제 해결 */
+    function updateActiveNav() {
+      let currentId = null;
+      document.querySelectorAll('.section[id]').forEach(section => {
+        if (section.getBoundingClientRect().top <= NAV_H + 10) {
+          currentId = section.id;
+        }
+      });
+      navPills.forEach(p => {
+        p.classList.toggle('active', p.getAttribute('href') === '#' + currentId);
+      });
+    }
 
     /* ── 섹션 접기/펼치기 (아코디언) ───────────── */
     document.querySelectorAll('.section-head').forEach(head => {
@@ -746,12 +763,18 @@
       });
     });
 
-    /* ── Nav 클릭: 해당 섹션만 펼치고 스크롤 이동 ── */
-    document.querySelectorAll('.nav-pill[href]').forEach(pill => {
+    /* ── Nav 클릭: active 즉시 반영 + 섹션 펼치고 스크롤 이동 ── */
+    navPills.forEach(pill => {
       pill.addEventListener('click', e => {
         e.preventDefault();
-        const section = document.getElementById(pill.getAttribute('href').slice(1));
+        const id = pill.getAttribute('href').slice(1);
+        const section = document.getElementById(id);
         if (!section) return;
+
+        // 클릭 즉시 active 반영 (observer 지연 없음)
+        navPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
         allSections().forEach(s => s.classList.add('collapsed'));
         section.classList.remove('collapsed');
         setTimeout(() => {
@@ -760,19 +783,9 @@
       });
     });
 
-    /* ── 스크롤 시 현재 섹션 nav 하이라이트 ──────── */
-    const navPills = document.querySelectorAll('.nav-pill[href]');
-
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = '#' + entry.target.id;
-          navPills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === id));
-        }
-      });
-    }, { rootMargin: '-10% 0px -80% 0px' });
-
-    document.querySelectorAll('.section[id]').forEach(s => io.observe(s));
+    /* ── 스크롤 시 active 업데이트 ─────────────── */
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav(); // 초기 실행
   </script>
 </body>
 </html>
