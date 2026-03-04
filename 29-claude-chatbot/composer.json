@@ -1,6 +1,0 @@
-{
-    "require": {
-        "php": "^8.0",
-        "anthropic-ai/sdk": "^0.5"
-    }
-}

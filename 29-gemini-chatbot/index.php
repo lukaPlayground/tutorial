@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 챗봇 — Claude API</title>
+<title>AI 챗봇 — Gemini API</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -250,7 +250,7 @@
 
 <!-- ── Sidebar ── -->
 <div id="sidebar">
-  <div class="logo">🤖 Claude Chat</div>
+  <div class="logo">🤖 Gemini Chat</div>
   <button class="btn-new" id="newChatBtn">+ 새 대화</button>
   <div class="divider"></div>
 
@@ -262,9 +262,9 @@
   <div>
     <div class="s-label">모델 선택</div>
     <select id="modelSelect">
-      <option value="claude-opus-4-6">claude-opus-4-6 (가장 강력)</option>
-      <option value="claude-sonnet-4-6">claude-sonnet-4-6 (균형)</option>
-      <option value="claude-haiku-4-5">claude-haiku-4-5 (빠름/저비용)</option>
+      <option value="gemini-2.0-flash">gemini-2.0-flash (빠름/무료)</option>
+      <option value="gemini-1.5-flash">gemini-1.5-flash (안정)</option>
+      <option value="gemini-1.5-pro">gemini-1.5-pro (고성능)</option>
     </select>
   </div>
 
@@ -276,7 +276,7 @@
   <div id="messages">
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🤖</div>
-      <div class="welcome-title">Claude AI 챗봇</div>
+      <div class="welcome-title">Gemini AI 챗봇</div>
       <div class="welcome-sub">메시지를 입력해서 대화를 시작하세요</div>
     </div>
   </div>
@@ -401,7 +401,7 @@ $id('newChatBtn').addEventListener('click', () => {
   messagesEl.innerHTML = `
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🤖</div>
-      <div class="welcome-title">Claude AI 챗봇</div>
+      <div class="welcome-title">Gemini AI 챗봇</div>
       <div class="welcome-sub">메시지를 입력해서 대화를 시작하세요</div>
     </div>`;
   $id('usageBox').textContent = '토큰 사용량이 여기에 표시됩니다';
