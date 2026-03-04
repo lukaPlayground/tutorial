@@ -41,8 +41,8 @@
 | 27 | [27-php-rest-api](./27-php-rest-api) | `[PHP]` REST API 서버 만들기 (순수 PHP · JSON · CORS) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/52) |
 | 28 | [28-php-file-upload](./28-php-file-upload) | `[PHP]` 파일 업로드 시스템 만들기 (다중 업로드 · 파일 교체 · 다운로드) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/53) |
 | 29 | [29-gemini-chatbot](./29-gemini-chatbot) | `[Gemini API]` 나만의 AI 챗봇 웹앱 만들기 (Gemini · 멀티턴) | 로컬 실행 ↓ | [Blog](https://lukaplayground.tistory.com/54) |
-| 30 | [30-pollinations-image](./30-pollinations-image) | `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음 · Vanilla JS · 무료) | 브라우저에서 index.html 열기 | [Blog](https://lukaplayground.tistory.com/55) |
-| 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 서버 필요 ↓ | [Blog](#) |
+| 30 | [30-pollinations-image](./30-pollinations-image) | `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음 · Vanilla JS · 무료) | [GitHub Pages](https://lukaplayground.github.io/tutorial/30-pollinations-image/) | [Blog](https://lukaplayground.tistory.com/55) |
+| 31 | [31-transformers-image-caption](./31-transformers-image-caption) | `[Transformers.js]` 이미지 설명 생성기 (브라우저 AI 추론 · Web Worker · ~200MB) | 로컬 서버 필요 ↓ | [Blog](https://lukaplayground.tistory.com/56) |
 
 ---
 
@@ -251,8 +251,6 @@ flutter run                # 실기기에서 실행
 
 ### AI / 자동화
 
-- [x] `[Pollinations.ai]` AI 이미지 생성기 (API 키 없음)
-- [ ] `[Transformers.js]` 이미지 설명 생성기 만들기 (브라우저 내 AI 추론, API 키 불필요 / 첫 로드 ~200MB)
 - [ ] `[Python + Claude]` PDF 요약 자동화 스크립트 만들기
 - [ ] `[n8n / Make]` 블로그 포스팅 자동화 워크플로우 만들기
 
