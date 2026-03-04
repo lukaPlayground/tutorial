@@ -81,8 +81,22 @@
         <div class="spinner" id="spinner" hidden></div>
         <img id="mainImg" alt="생성된 이미지" hidden>
         <div class="error-msg" id="errorMsg" hidden>
-          ⚠️ 이미지 생성에 실패했습니다.<br>
-          <small>프롬프트를 수정하거나 다시 시도하세요.</small>
+          <!-- 진단 중 -->
+          <div id="errorChecking" hidden>
+            ⏳ 서버 상태 확인 중...
+          </div>
+          <!-- 프롬프트 문제 (기존 메시지) -->
+          <div id="errorDefault" hidden>
+            ⚠️ 이미지 생성에 실패했습니다.<br>
+            <small>프롬프트를 수정하거나 다시 시도하세요.</small>
+          </div>
+          <!-- 서버 장애 -->
+          <div id="errorServerDown" hidden>
+            🔴 Pollinations.ai 서버가 응답하지 않습니다.<br>
+            <small>잠시 후 다시 시도하거나
+              <a href="https://github.com/pollinations/pollinations/issues" target="_blank">상태 확인</a>하세요.
+            </small>
+          </div>
         </div>
       </div>
 
