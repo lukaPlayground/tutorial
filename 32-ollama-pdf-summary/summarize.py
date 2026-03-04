@@ -10,6 +10,41 @@ from pathlib import Path
 from datetime import datetime
 
 import fitz  # PyMuPDF
+import ollama
+
+
+# ── 프롬프트 템플릿 ─────────────────────────────────────
+FINAL_PROMPT_KO = """다음은 PDF 문서의 내용입니다. 아래 형식으로 요약해주세요:
+
+## 요약
+(3~5문장으로 전체 내용 요약)
+
+## 핵심 포인트
+- (핵심 포인트 3~5개, 각 1~2문장)
+
+문서 내용:
+{text}"""
+
+FINAL_PROMPT_EN = """Here is the content of a PDF document. Please summarize it in the following format:
+
+## Summary
+(3-5 sentences summarizing the entire content)
+
+## Key Points
+- (3-5 key points, 1-2 sentences each)
+
+Document content:
+{text}"""
+
+CHUNK_PROMPT_KO = """다음은 PDF 문서의 일부입니다. 핵심 내용을 3~5문장으로 요약해주세요.
+
+문서 내용:
+{chunk_text}"""
+
+CHUNK_PROMPT_EN = """Here is a portion of a PDF document. Please summarize the key content in 3-5 sentences.
+
+Document content:
+{chunk_text}"""
 
 
 def parse_args():
@@ -74,6 +109,45 @@ def chunk_pages(pages: list[str], max_chars: int = 20000) -> list[str]:
     return chunks
 
 
+def call_ollama(prompt: str, model: str) -> str:
+    """Ollama API 호출. 연결 실패 시 안내 메시지 후 종료."""
+    try:
+        response = ollama.chat(
+            model=model,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response["message"]["content"].strip()
+    except Exception as e:
+        err = str(e)
+        if "Connection" in err or "refused" in err.lower():
+            print("\nOllama를 먼저 실행하세요: ollama serve")
+            sys.exit(1)
+        raise
+
+
+def summarize_text(text: str, model: str, lang: str, chunks: list[str]) -> str:
+    """
+    단일 청크: 바로 최종 요약 요청.
+    다중 청크: 각 청크 개별 요약 → 합산 후 최종 요약.
+    """
+    final_tmpl = FINAL_PROMPT_KO if lang == "ko" else FINAL_PROMPT_EN
+    chunk_tmpl = CHUNK_PROMPT_KO if lang == "ko" else CHUNK_PROMPT_EN
+
+    if len(chunks) == 1:
+        return call_ollama(final_tmpl.format(text=text), model)
+
+    # 다중 청크: 각 청크 요약
+    chunk_summaries = []
+    for i, chunk in enumerate(chunks, 1):
+        print(f"    청크 {i}/{len(chunks)} 요약 중...")
+        chunk_summaries.append(call_ollama(chunk_tmpl.format(chunk_text=chunk), model))
+
+    # 청크 요약들을 합쳐 최종 요약
+    print(f"    최종 요약 생성 중...")
+    combined = "\n\n".join(chunk_summaries)
+    return call_ollama(final_tmpl.format(text=combined), model)
+
+
 def main():
     args = parse_args()
 
@@ -105,7 +179,9 @@ def main():
             chunks = chunk_pages(pages)
             page_count = len(pages)
             print(f"  페이지: {page_count} | 텍스트: {len(full_text):,}자 | 청크: {len(chunks)}개")
-            # TODO: 요약 (Task 4에서 구현)
+            print(f"  요약 생성 중... (모델: {args.model})")
+            summary = summarize_text(full_text, args.model, args.lang, chunks)
+            print(f"  요약 완료 ({len(summary)}자)")
             success += 1
         except Exception as e:
             print(f"  [ERROR] {pdf_path.name}: {e}")
