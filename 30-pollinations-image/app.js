@@ -17,10 +17,15 @@ const downloadBtn   = document.getElementById('downloadBtn');
 const copyPromptBtn = document.getElementById('copyPromptBtn');
 const historySection= document.getElementById('historySection');
 const historyGrid   = document.getElementById('historyGrid');
+const errorChecking   = document.getElementById('errorChecking');
+const errorDefault    = document.getElementById('errorDefault');
+const errorServerDown = document.getElementById('errorServerDown');
 
 // ── State ────────────────────────────────────────────────
 const historyItems = [];   // { url, prompt, model, width, height, seed }
 let currentItem    = null;
+// ── 서버 상태 진단용 테스트 URL ────────────────────────
+const TEST_URL = 'https://image.pollinations.ai/prompt/cat?width=32&height=32&nologo=true&seed=1';
 
 // ── URL Builder ──────────────────────────────────────────
 /**
@@ -82,9 +87,32 @@ function generate() {
   mainImg.src = url;      // 브라우저가 이미지 요청 → onload/onerror 처리
 }
 
+// ── 서버 상태 진단 ────────────────────────────────────
+/**
+ * mainImg.onerror 발생 시 호출.
+ * 테스트 이미지 로드로 서버 다운 vs 프롬프트 문제 구분.
+ */
+function checkServerStatus() {
+  setState('error');
+  errorChecking.hidden   = false;
+  errorDefault.hidden    = true;
+  errorServerDown.hidden = true;
+
+  const testImg = new Image();
+  testImg.onload  = () => showError('prompt');
+  testImg.onerror = () => showError('server');
+  testImg.src = TEST_URL;
+}
+
+function showError(type) {
+  errorChecking.hidden   = true;
+  errorDefault.hidden    = (type !== 'prompt');
+  errorServerDown.hidden = (type !== 'server');
+}
+
 // ── img 이벤트 ───────────────────────────────────────────
 mainImg.onload  = () => { setState('done');  addToHistory(currentItem); };
-mainImg.onerror = () => { setState('error'); };
+mainImg.onerror = checkServerStatus;
 
 // ── 이벤트 바인딩 ────────────────────────────────────────
 generateBtn.addEventListener('click', generate);
