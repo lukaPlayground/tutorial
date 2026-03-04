@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformers.js Image Caption</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    🧠 Image Caption
+    <span id="statusBadge" class="badge badge-loading">⏳ 모델 로딩 중...</span>
+  </header>
+
+  <main>
+
+    <!-- 모델 로딩 진행률 -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-text" id="progressText">모델 초기화 중...</span>
+    </div>
+
+    <!-- 드롭존 -->
+    <div class="dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <div class="dropzone-icon">📁</div>
+      <p class="dropzone-label">이미지를 드래그하거나 클릭하여 선택</p>
+      <p class="dropzone-hint">JPG · PNG · WebP · GIF</p>
+    </div>
+
+    <!-- 결과 레이아웃 (이미지 + 설명) -->
+    <div class="result-layout" id="resultLayout" hidden>
+
+      <div class="preview-panel">
+        <img id="previewImg" alt="업로드된 이미지">
+      </div>
+
+      <div class="caption-panel">
+        <div class="caption-header">📝 생성된 설명</div>
+        <div class="caption-body" id="captionBody">
+          <div class="infer-spinner" id="inferSpinner"></div>
+        </div>
+        <button class="btn-copy" id="copyBtn" hidden>📋 복사</button>
+      </div>
+
+    </div>
+
+    <!-- 모델 정보 푸터 -->
+    <div class="model-info">
+      <span class="model-badge">ViT-GPT2</span>
+      <span class="model-badge">~200MB</span>
+      <span class="model-badge">첫 로드 후 브라우저 캐시</span>
+    </div>
+
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
