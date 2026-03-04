@@ -102,5 +102,81 @@ randomSeedBtn.addEventListener('click', () => {
   seedEl.value = Math.floor(Math.random() * 1_000_000_000);
 });
 
-// ── 히스토리 placeholder (Task 4에서 구현) ───────────────
-function addToHistory(item) { /* Task 4 */ }
+// ── 히스토리 ─────────────────────────────────────────────
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function addToHistory(item) {
+  historyItems.unshift(item);                        // 최신이 앞으로
+  if (historyItems.length > 20) historyItems.pop();  // 최대 20개 FIFO
+  renderHistory();
+}
+
+function renderHistory() {
+  if (historyItems.length === 0) return;
+  historySection.hidden = false;
+
+  historyGrid.innerHTML = historyItems.map((item, i) => `
+    <div class="history-item" data-index="${i}"
+         title="${escapeHtml(item.prompt)}\n${item.model} ${item.width}×${item.height}">
+      <img src="${item.url}" alt="" loading="lazy">
+    </div>
+  `).join('');
+
+  historyGrid.querySelectorAll('.history-item').forEach(el => {
+    el.addEventListener('click', () => {
+      restoreHistory(parseInt(el.dataset.index, 10));
+    });
+  });
+}
+
+function restoreHistory(index) {
+  const item = historyItems[index];
+  if (!item) return;
+
+  promptEl.value  = item.prompt;
+  modelEl.value   = item.model;
+  widthEl.value   = item.width;
+  heightEl.value  = item.height;
+  seedEl.value    = item.seed ?? '';
+
+  currentItem = item;
+  mainImg.src = item.url;
+  setState('done');
+}
+
+// ── 다운로드 ─────────────────────────────────────────────
+downloadBtn.addEventListener('click', async () => {
+  if (!currentItem) return;
+  try {
+    const res  = await fetch(currentItem.url);
+    const blob = await res.blob();
+    const a    = Object.assign(document.createElement('a'), {
+      href:     URL.createObjectURL(blob),
+      download: `pollinations-${currentItem.seed ?? Date.now()}.png`,
+    });
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  } catch {
+    alert('다운로드 실패. 이미지를 우클릭 → "다른 이름으로 저장" 해주세요.');
+  }
+});
+
+// ── 프롬프트 복사 ─────────────────────────────────────────
+copyPromptBtn.addEventListener('click', async () => {
+  if (!currentItem) return;
+  try {
+    await navigator.clipboard.writeText(currentItem.prompt);
+    copyPromptBtn.textContent = '✅ 복사됨!';
+    setTimeout(() => { copyPromptBtn.textContent = '🔗 프롬프트 복사'; }, 1500);
+  } catch {
+    alert('클립보드 복사 실패. 브라우저 권한을 확인하세요.');
+  }
+});
