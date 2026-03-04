@@ -39,20 +39,20 @@ def extract_text(pdf_path: Path) -> list[str]:
     PDF에서 페이지별 텍스트를 추출해 리스트로 반환.
     스캔 PDF(텍스트 없음)이면 빈 리스트 반환.
     """
-    doc = fitz.open(str(pdf_path))
-    pages = []
-    for page in doc:
-        text = page.get_text().strip()
-        if text:
-            pages.append(text)
-    doc.close()
+    with fitz.open(str(pdf_path)) as doc:
+        pages = []
+        for page in doc:
+            text = page.get_text().strip()
+            if text:
+                pages.append(text)
     return pages
 
 
 def chunk_pages(pages: list[str], max_chars: int = 20000) -> list[str]:
     """
     페이지 경계 기준으로 텍스트를 청크로 분할.
-    각 청크는 max_chars 이하 (페이지 중간에서 자르지 않음).
+    페이지 중간에서 자르지 않음. 단일 페이지가 max_chars를 초과하면
+    그 페이지만으로 청크를 구성 (초과 허용).
     """
     chunks = []
     current_chunk = []
