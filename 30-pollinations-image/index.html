@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pollinations Image Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    🎨 Pollinations Image Generator
+    <span class="badge">무료 API · 키 없음</span>
+  </header>
+
+  <main class="layout">
+
+    <!-- ── Left: Controls ── -->
+    <aside class="controls">
+
+      <div class="field">
+        <label for="prompt">프롬프트</label>
+        <textarea id="prompt" rows="5"
+          placeholder="a futuristic city at night, cinematic lighting, ultra detailed..."></textarea>
+        <span class="hint">Ctrl+Enter 로 생성</span>
+      </div>
+
+      <div class="field">
+        <label for="model">모델</label>
+        <select id="model">
+          <option value="flux">flux — 기본, 범용</option>
+          <option value="flux-realism">flux-realism — 사실적</option>
+          <option value="flux-anime">flux-anime — 애니 스타일</option>
+          <option value="flux-3d">flux-3d — 3D 렌더링</option>
+          <option value="turbo">turbo — 빠른 생성</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="imgWidth">너비</label>
+          <select id="imgWidth">
+            <option value="512">512</option>
+            <option value="768">768</option>
+            <option value="1024" selected>1024</option>
+            <option value="1280">1280</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="imgHeight">높이</label>
+          <select id="imgHeight">
+            <option value="512">512</option>
+            <option value="768">768</option>
+            <option value="1024" selected>1024</option>
+            <option value="1280">1280</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="seed">시드 <span class="label-hint">(비워두면 랜덤)</span></label>
+        <div class="seed-row">
+          <input type="number" id="seed" placeholder="랜덤" min="0">
+          <button id="randomSeedBtn" title="랜덤 시드 생성">🎲</button>
+        </div>
+      </div>
+
+      <button id="generateBtn" class="btn-generate">✨ 생성하기</button>
+
+    </aside>
+
+    <!-- ── Right: Viewer ── -->
+    <section class="viewer">
+
+      <!-- 이미지 영역 -->
+      <div class="image-area" id="imageArea">
+        <div class="placeholder" id="placeholder">
+          <div class="placeholder-icon">🎨</div>
+          <p>프롬프트를 입력하고<br>이미지를 생성하세요</p>
+        </div>
+        <div class="spinner" id="spinner" hidden></div>
+        <img id="mainImg" alt="생성된 이미지" hidden>
+        <div class="error-msg" id="errorMsg" hidden>
+          ⚠️ 이미지 생성에 실패했습니다.<br>
+          <small>프롬프트를 수정하거나 다시 시도하세요.</small>
+        </div>
+      </div>
+
+      <!-- 액션 버튼 -->
+      <div class="actions" id="actions" hidden>
+        <button id="downloadBtn" class="btn-action">↓ 다운로드</button>
+        <button id="copyPromptBtn" class="btn-action">🔗 프롬프트 복사</button>
+      </div>
+
+      <!-- 히스토리 -->
+      <div class="history-section" id="historySection" hidden>
+        <h3 class="history-label">히스토리</h3>
+        <div class="history-grid" id="historyGrid"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
